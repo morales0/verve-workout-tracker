@@ -24,7 +24,7 @@ function App() {
           </Route>
 
           <Route path="/workout">
-            <h1>Workout Header</h1>
+            <BasicNavbar />
           </Route>
 
           <Route path="/" exact={true}>

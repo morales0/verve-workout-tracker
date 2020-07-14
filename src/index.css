@@ -26,3 +26,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Global media queries */
+@media only screen and (max-width: 800px) {
+  html{
+    font-size: 14px;
+  }
+}
