@@ -5,14 +5,14 @@ const Set = ({setNames, set}) => {
    return (
       <div>
          {setNames.map((setName, index) => {
-            console.log(index)
+            console.log(setName, set[setName])
             return (
                <>
                {index !== 0 && 
-                  <SetSeparator />
+                  <SetSeparator key={index}/>
                }
-               <TextInput defaultValue={set[setName]} />
-               <span css={`
+               <NumberInput key={index + 1} value={set[setName]} />
+               <span key={index + 2} css={`
                   font-size: .9rem;
                   padding: .3rem;
                `}>
@@ -29,24 +29,24 @@ const Set = ({setNames, set}) => {
 
 const SetSeparator = styled.hr`
    width: 90%;
-   margin: .25rem 0;
+   margin: 0;
+   margin-bottom: .4rem;
    border: none;
    border-top: 2px solid #ddd;
 `
 
-const TextInput = styled.input.attrs(props => ({
-   type: "text",
-   size: "10",
- }))`
-   width: 100%;
+const NumberInput = styled.input.attrs(props => ({
+   type: "number",
+}))`
+   max-width: 3rem;
    outline: none;
    border: none;
-   background: #ddd;
+   background: #e4e4e4;
    border-radius: 3px;
    padding: 5px;
    text-align: center;
    font-family: inherit;
    font-size: 1.15rem;
- `
+`
 
 export default Set
