@@ -35,9 +35,14 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+input[type=number]:focus {
+  border: none;
+  outline: 2px solid #aaa;
+  outline-style: auto;
 }
 
 /* Global media queries */

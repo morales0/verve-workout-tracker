@@ -10,6 +10,8 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  console.log(localStorage)
+  
   return (
     <Router>
       {/* Route a header depending on path here */}

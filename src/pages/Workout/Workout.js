@@ -1,134 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components/macro'
 
+// DEV
+import initial_state from '../../context/test_initial_data'
+
+// Hooks and context
+import { useWorkout } from '../../context/UserContext/UserContext'
+
 // Components
 import { Button, ExerciseBox } from '../../components'
 
-// Mock initial state
-
-const initial_exercises = [
-   {
-      name: "Pushups",
-      setNames: ['reps'],
-      sets: [
-         {
-            reps: 10
-         },
-         {
-            reps: 15
-         },
-         {
-            reps: 15
-         },
-         {
-            reps: 20
-         }
-      ]
-   },
-   {
-      name: "Pullups",
-      setNames: ['reps'],
-      sets: [
-         {
-            reps: 10
-         },
-         {
-            reps: 15
-         },
-         {
-            reps: 15
-         },
-         {
-            reps: 20
-         }
-      ]
-   },
-   {
-      name: "Face Pulls",
-      setNames: ['reps'],
-      sets: [
-         {
-            reps: 10
-         },
-         {
-            reps: 15
-         },
-         {
-            reps: 15
-         },
-         {
-            reps: 20
-         }
-      ]
-   },
-   {
-      name: "Shoulder Press",
-      setNames: ['weight', 'reps'],
-      sets: [
-         {
-            weight: 45,
-            reps: 12
-         },
-         {
-            weight: 45,
-            reps: 15
-         },
-         {
-            weight: 45,
-            reps: 15
-         }
-      ]
-   }
-]
 
 const Workout = () => {
-   const [exercises, setExercises] = useState(initial_exercises);
-   useEffect(() => {
-      console.log(exercises)      
-   })
-
-   // Actions
-   const addSet = (index) => {
-      const tempArr = [...exercises]
-      const emptySet = {}
-      tempArr[index].setNames.forEach((name) => {
-         emptySet[name] = 0;
-      })
-
-      if (tempArr[index].sets){
-         tempArr[index].sets.push(emptySet)
-      } else {
-         tempArr[index].sets = [emptySet]
-      }
-      
-      setExercises(tempArr)
-   }
-
-   const removeSet = (index) => {
-      const tempArr = [...exercises]
-
-      tempArr[index].sets.pop();
-
-      setExercises(tempArr)
-   }
-
-   const removeExercise = (index) => {
-      const tempArr = [...exercises]
-      tempArr.splice(index, 1)
-
-      setExercises(tempArr)
-   }
-
-   const addExercise = () => {
-      const tempArr = [...exercises]
-      tempArr.unshift({
-         name: "New Exercise",
-         setNames: ['reps'],
-         sets: []
-      })
-
-      setExercises(tempArr)
-   }
+   const {state, addExercise, removeExercise, addSet, removeSet, updateSet} = useWorkout(initial_state);
 
    return (
       <div css={`
@@ -151,7 +35,7 @@ const Workout = () => {
                }
             `}>
                <h1>Exercises</h1>
-               <Button onClick={addExercise}>
+               <Button onClick={() => addExercise()}>
                   New Exercise
                </Button>
             </header>
@@ -166,7 +50,18 @@ const Workout = () => {
 
                padding: .5rem 1rem;
             `}>
-               {exercises.map((exercise, index) => (<ExerciseBox key={index} index={index} exercise={exercise} addSet={addSet} removeSet={removeSet} removeExercise={removeExercise}/>))}
+               {Object.values(state).map((exercise, index) => {
+                  console.log("EXERCISE: ", exercise)
+
+                  return (
+                  <ExerciseBox 
+                     key={index} exercise={exercise}
+                     removeExercise={removeExercise}
+                     addSet={addSet} removeSet={removeSet}
+                     updateSet={updateSet}
+                  />
+                  )
+               })}
             </div>
          </div>
 
