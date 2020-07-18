@@ -6,8 +6,6 @@ import { ReactComponent as MinusSVG } from '../../images/minus.svg'
 import { Set } from '..'
 import { Button } from '../index'
 
-import './ExerciseBox.scss'
-
 const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) => {
 
    return (

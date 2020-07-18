@@ -76,7 +76,7 @@ const BasicNavbar = (props) => {
       padding: .25rem 1rem;
       position: relative;
       z-index: 99;
-      background: #ffffff;
+      background: #63686b;
       box-shadow: 0 0 5px 0 #00000044;
     `}>
       <h2>Verve</h2>

@@ -22,7 +22,7 @@ const workoutReducer = (state, action) => {
          const newState = {...state}
          delete newState[action.uid]
 
-         return { newState }
+         return newState
       }
 
       case 'updateExercise' : {
