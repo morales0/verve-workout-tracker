@@ -3,11 +3,12 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import styled from 'styled-components/macro'
 
-import { Main } from './components'
+import { Main, Navbar, Nav, UserNavIcon } from './components'
 import { Home, Workout } from './pages'
 
 import logo from './logo.svg';
 import './App.css';
+import verveLogo from './images/verve_fire_logo_1.svg'
 
 function App() {
   console.log(localStorage)
@@ -69,22 +70,14 @@ function App() {
 
 const BasicNavbar = (props) => {
   return (
-    <div css={`
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: .25rem 1rem;
-      position: relative;
-      z-index: 99;
-      background: #63686b;
-      box-shadow: 0 0 5px 0 #00000044;
-    `}>
-      <h2>Verve</h2>
-      <nav>
+    <Navbar>
+      <img src={verveLogo} alt="React Logo" width="45px"/>
+      <Nav justify="right">
         <a href="/">Workout</a>
         <a href="/">Contact</a>
-      </nav>
-    </div>
+      </Nav>
+      <UserNavIcon />
+    </Navbar>
   );
 }
 

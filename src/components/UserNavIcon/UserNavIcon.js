@@ -1,0 +1,75 @@
+import React, {useState, useEffect, useRef} from 'react'
+
+import styled from 'styled-components/macro'
+
+const usePopUp = (ref) => {
+   const [toggle, setToggle] = useState(false)
+
+   useEffect(() => {
+       // Bind the event listener
+       document.addEventListener("mousedown", (e) => {
+         if (ref.current && !ref.current.contains(e.target)) {
+            setToggle(false);
+         }
+       });
+
+       return () => {
+           // Unbind the event listener on clean up
+           document.removeEventListener("mousedown");
+       };
+   }, [ref]);
+
+   return [
+      toggle,
+      setToggle,
+   ]
+}
+
+/**
+ * User Nav Icon on the top right of the screen in the navbar
+ * 
+ * TODO:
+ * Read from user context? Or make user of the component determine what the output is
+ * DEFINITELY use CSSTransitions library for this
+ * 
+ */
+const UserNavIcon = ({name}) => {
+   const wrapperRef = useRef(null);
+   const [toggle, setToggle] = usePopUp(wrapperRef);
+   
+   return (
+      
+      <div className="user_nav_icon" 
+         ref={wrapperRef}
+         onClick={() => setToggle(true)}
+         css={`
+            height: ${toggle ? '300px' : '45px'};
+            width: ${toggle ? '200px' : '45px'};
+
+            /* align-self: ${toggle ? 'auto': 'auto'}; */
+            border-radius: ${toggle ? '15px' : '25%'};
+         `}
+      >
+         <span css={`padding-bottom: 0`}>{name ? name : "User"}</span>
+         {toggle &&
+            <div css={`flex: 1; padding: 1rem 0`}>
+               <button css={`
+                  padding: .5rem 1rem;
+                  white-space: nowrap;
+                  background: transparent;
+                  border: none;
+                  outline: none;
+                  border: 1px solid #aaa;
+                  border-radius: 5px;
+
+               `}>
+                  Toggle Dark Mode
+               </button>
+            </div>
+         }
+      </div>
+      
+   )
+}
+
+export default UserNavIcon
