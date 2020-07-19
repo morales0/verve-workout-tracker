@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components/macro'
+import React, {useContext} from 'react'
+import styled, {ThemeContext} from 'styled-components/macro'
 
 import { ReactComponent as AddSVG } from '../../images/plus.svg'
 import { ReactComponent as MinusSVG } from '../../images/minus.svg'
@@ -7,6 +7,7 @@ import { Set } from '..'
 import { Button } from '../index'
 
 const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) => {
+   const {themeValue} = useContext(ThemeContext)
 
    return (
       <div className="exercise_box_container">
@@ -19,7 +20,7 @@ const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) =
                </Button>
             </div>
          </header>
-         <div className="exercise_box_content">
+         <div className="exercise_box_content" css={`background: ${props => props.theme.themeValue.offBG};`}>
             <div className="sets_container">
                {exercise.sets.length > 0 ?
                   exercise.sets.map((set, index) => (

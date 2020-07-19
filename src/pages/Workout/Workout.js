@@ -20,7 +20,7 @@ const Workout = () => {
    return (
       <div className="workout_page">
          <section className="exercises_section">
-            <header>
+            <header css={` background: ${props => props.theme.themeValue.mainBG}90;`}>
                <h1>EXERCISES</h1>
                <Button onClick={() => addExercise()}>
                   New Exercise

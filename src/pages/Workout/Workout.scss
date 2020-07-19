@@ -23,9 +23,9 @@ section.exercises_section {
       justify-content: space-between;
       align-items: center;
       padding: .25rem 1rem;
-      background: #fcfcfe90;
       -webkit-backdrop-filter: blur(7px);
       backdrop-filter: blur(7px);
+      transition: background .5s;
 
       > h1 {
          margin: 1rem 0;
@@ -85,7 +85,7 @@ div.exercise_box_content {
    display: flex;
    justify-content: space-between;
    padding: 0;
-   background: #fff;
+   transition: background .5s;
 
    div.sets_container {
       display: flex;

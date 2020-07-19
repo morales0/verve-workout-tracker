@@ -8,6 +8,7 @@ import SetNameInput from "./SetNameInput/SetNameInput"
 import Navbar from "./Navbar/Navbar"
 import Nav from "./Nav/Nav"
 import UserNavIcon from "./UserNavIcon/UserNavIcon"
+import ThemeToggle from "./ThemeToggle/ThemeToggle"
 
 
 export {
@@ -16,6 +17,7 @@ export {
    Navbar,
    Nav,
    UserNavIcon,
+   ThemeToggle,
    StyledNumberInput,
    SetNameInput,
    ToolBox,

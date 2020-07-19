@@ -2,6 +2,8 @@ import React, {useState, useEffect, useRef} from 'react'
 
 import styled from 'styled-components/macro'
 
+import { ThemeToggle } from '..'
+
 const usePopUp = (ref) => {
    const [toggle, setToggle] = useState(false)
 
@@ -53,18 +55,7 @@ const UserNavIcon = ({name}) => {
          <span css={`padding-bottom: 0`}>{name ? name : "User"}</span>
          {toggle &&
             <div css={`flex: 1; padding: 1rem 0`}>
-               <button css={`
-                  padding: .5rem 1rem;
-                  white-space: nowrap;
-                  background: transparent;
-                  border: none;
-                  outline: none;
-                  border: 1px solid #aaa;
-                  border-radius: 5px;
-
-               `}>
-                  Toggle Dark Mode
-               </button>
+               <ThemeToggle />
             </div>
          }
       </div>
