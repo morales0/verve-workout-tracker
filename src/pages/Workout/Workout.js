@@ -10,12 +10,11 @@ import { useWorkout } from '../../context/UserContext/UserContext'
 
 // Components
 import { Button, ExerciseBox } from '../../components'
+import { useParams } from 'react-router-dom'
 
 
-const Workout = () => {
-   const {state, addExercise, removeExercise, addSet, removeSet, updateSet} = useWorkout(initial_state);
-
-   console.log(state)
+const Workout = (props) => {
+   const {workout, addExercise, removeExercise, addSet, removeSet, updateSet} = useWorkout(props.wid)
 
    return (
       <div className="workout_page">
@@ -27,7 +26,7 @@ const Workout = () => {
                </Button>
             </header>
             <div>
-               {Object.values(state).map((exercise, index) => {
+               {Object.values(workout).map((exercise, index) => {
                   return (
                   <ExerciseBox 
                      key={index} exercise={exercise}
@@ -47,7 +46,7 @@ const Workout = () => {
    
             <div>
                {/* <p css={`margin: auto`}>None completed yet</p> */}
-               {Object.values(state).map((exercise, index) => {
+               {Object.values(workout).map((exercise, index) => {
                   return (
                   <ExerciseBox 
                      key={index} exercise={exercise}

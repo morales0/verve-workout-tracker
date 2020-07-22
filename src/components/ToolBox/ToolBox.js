@@ -2,6 +2,29 @@ import React from 'react'
 import styled from 'styled-components/macro'
 
 import { Button } from '../'
+import { Link } from 'react-router-dom'
+
+const ToolBoxItem2 = (props) => (
+   <Link to={props.href}>
+      <ToolBoxButton>
+         {props.heading && 
+         <h2 css={`
+            color: #f94e4e;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+         `}>
+            {props.heading}
+         </h2>} 
+         <div css={`
+            padding: .75rem;
+            font-size: 1rem;
+            color: #1a1a1a;
+         `}>
+            <p>{props.children}</p>
+         </div>
+      </ToolBoxButton>
+   </Link>
+)
 
 const ToolBoxItem = (props) => (
    <ToolBoxButton as="a" href={props.href}>
@@ -50,6 +73,6 @@ const ToolBoxButton = styled(Button)`
 `
 
 // Compact the import into one object
-ToolBox.Item = ToolBoxItem
+ToolBox.Item = ToolBoxItem2
 
 export default ToolBox

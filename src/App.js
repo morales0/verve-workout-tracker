@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch, useParams} from 'react-router-dom'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
 import ls from 'local-storage'
 
@@ -11,6 +11,7 @@ import logo from './logo.svg';
 import './App.css';
 import verveLogo from './images/verve_fire_logo_1.svg'
 import { lightTheme } from './context/themes'
+import { useGlobalState } from './hooks/useGlobalState';
 
 function App() {
   const [themeValue, setThemeValue] = useState(ls('theme') ? ls('theme') : lightTheme)
@@ -37,7 +38,7 @@ function App() {
               <h1>Login/Signup Header</h1>
             </Route>
 
-            <Route path="/workout">
+            <Route path="/workout/*">
               <BasicNavbar />
             </Route>
 
@@ -62,9 +63,11 @@ function App() {
               <h1>Signup</h1>
             </Route>
 
-            <Route path="/workout">
-              <Workout />
+            <Route path="/workout/:wid">
+              <WorkoutRouter />
             </Route>
+
+            
 
             <Route path="/" exact={true}>
               <Home/>
@@ -99,6 +102,19 @@ const BasicNavbar = (props) => {
       <UserNavIcon />
     </Navbar>
   );
+}
+
+const WorkoutRouter = (props) => {
+  const {wid} = useParams()
+  let redirectWid = wid;
+  const [data, dispatch] = useGlobalState()
+
+  if (wid === 'new') {
+    dispatch({type: 'createNewWorkout'})
+    redirectWid = data.currentWorkoutID
+  }
+
+  return redirectWid === 'new' ? <div>Creating new workout</div> : <Workout wid={redirectWid}/>
 }
 
 export default App;

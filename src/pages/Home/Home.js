@@ -1,9 +1,12 @@
 import React from 'react'
+import { useUser } from '../../context/user-context'
 import styled from 'styled-components/macro'
 
 import { Button, ToolBox } from '../../components'
 
 const Home = () => {
+   const {user} = useUser()
+
    return (
       <div css={`
          display: flex;
@@ -26,7 +29,16 @@ const Home = () => {
             padding: 1rem 1.25rem;
          `}>
             <ToolBox>
-               <ToolBox.Item heading="New Workout" href="/workout">Start a new workout here</ToolBox.Item>
+               {
+                  user.isWorkingOut ?
+                  <ToolBox.Item heading="Continue Workout" href={`/workout/${user.currentWorkoutID}`}>
+                     Finish your workout!
+                  </ToolBox.Item>
+                     :
+                  <ToolBox.Item heading="New Workout" href={`/workout/new`}>
+                     Start a new workout here
+                  </ToolBox.Item>
+               }
                <ToolBox.Item heading="Gains" href="/gains">Analyze your amazing gains!</ToolBox.Item>
             </ToolBox>
          </div>

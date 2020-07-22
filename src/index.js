@@ -1,13 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as serviceWorker from './serviceWorker';
+
 import './index.css';
 import 'typeface-montserrat'
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { AuthProvider } from './context/auth-context'
+import { UserProvider } from './context/user-context'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
