@@ -18,6 +18,7 @@ function App() {
 
   useEffect(() => {
     ls('theme', themeValue)
+    console.log('App re-render')
   })
   
   console.log("Local Storage: ", localStorage)
@@ -64,7 +65,7 @@ function App() {
             </Route>
 
             <Route path="/workout/:wid">
-              <WorkoutRouter />
+              <Workout/>
             </Route>
 
             

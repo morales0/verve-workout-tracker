@@ -14,13 +14,15 @@ const globalReducer = (state, action) => {
       case 'createNewWorkout': {
          // Use the current date and time as the unique id
          const now = new Date();
+         console.log('Creating new workout...')
 
          return {
             ...state,
-            currentWorkoutID: now,
+            currentWorkoutID: action.wid,
+            isWorkingOut: true,
             workouts: {
-               [now]: {
-                  wid: now,
+               [action.wid]: {
+                  wid: action.wid,
                   completed: false,
                   dateStarted: now.toISOString,
                   timeStarted: now.getTime,

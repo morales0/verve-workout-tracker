@@ -6,7 +6,8 @@ import './Workout.scss'
 import initial_state from '../../context/test_initial_data'
 
 // Hooks and context
-import { useWorkout } from '../../context/UserContext/UserContext'
+import { useWorkout } from '../../hooks/user-hooks'
+import { useUser } from '../../context/user-context'
 
 // Components
 import { Button, ExerciseBox } from '../../components'
@@ -14,19 +15,23 @@ import { useParams } from 'react-router-dom'
 
 
 const Workout = (props) => {
-   const {workout, addExercise, removeExercise, addSet, removeSet, updateSet} = useWorkout(props.wid)
+   const {wid} = useParams()
+   const [workout, addExercise, removeExercise, addSet, removeSet, updateSet] = useWorkout(wid)
 
-   return (
+   console.log("update: ", updateSet)
+
+   return !workout ? null : (
       <div className="workout_page">
          <section className="exercises_section">
             <header css={` background: ${props => props.theme.themeValue.mainBG}90;`}>
                <h1>EXERCISES</h1>
-               <Button onClick={() => addExercise()}>
+               <Button onClick={() => addExercise("New exercise")}>
                   New Exercise
                </Button>
             </header>
             <div>
-               {Object.values(workout).map((exercise, index) => {
+               {Object.values(workout.exercises).map((exercise, index) => {
+                  console.log(exercise)
                   return (
                   <ExerciseBox 
                      key={index} exercise={exercise}
@@ -46,7 +51,7 @@ const Workout = (props) => {
    
             <div>
                {/* <p css={`margin: auto`}>None completed yet</p> */}
-               {Object.values(workout).map((exercise, index) => {
+               {Object.values(workout.exercises).map((exercise, index) => {
                   return (
                   <ExerciseBox 
                      key={index} exercise={exercise}

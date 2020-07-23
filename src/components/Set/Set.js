@@ -3,6 +3,8 @@ import styled from 'styled-components/macro'
 import { SetNameInput } from '..'
 
 const Set = ({setNames, set, updateSet}) => {
+   console.log(updateSet)
+   
    return (
       <div className="set">
          {setNames.map((setName, index) => {

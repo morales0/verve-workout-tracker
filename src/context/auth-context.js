@@ -5,7 +5,8 @@ import { useGlobalState } from '../hooks/useGlobalState'
 const newUser ={
    name: 'NEW USER',
    displayName: 'user',
-   isWorkingOut: false
+   isWorkingOut: false,
+   workouts: {}
 }
 
 const AuthContext = React.createContext();
@@ -13,6 +14,11 @@ const AuthContext = React.createContext();
 const AuthProvider = (props) => {
    const [authenticating, setAuthenticating] = useState(true)
    const [data, dataDispatch] = useGlobalState()
+
+   useEffect(() => {
+      console.log('Render')
+      ls('userData', data)
+   }, [data])
 
    // Get local storage data for user
    // Eventually this will get the user details from firebase

@@ -21,7 +21,10 @@ const SetNameInput = ({setInitialValue, setName, updateSet}) => {
          <StyledNumberInput  
             value={value} 
             onChange={(e) => setValue(e.target.value > 999 ? ~~(e.target.value / 10) : e.target.value)}  
-            onBlur={(e) => updateSet(setName, value)}
+            onBlur={(e) => {
+               console.log(updateSet)
+               updateSet(setName, value)
+            }}
          />
          <span css={`font-size: .9rem; padding: .3rem;`}>
             {setName}

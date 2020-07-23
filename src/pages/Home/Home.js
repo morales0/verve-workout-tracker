@@ -35,7 +35,7 @@ const Home = () => {
                      Finish your workout!
                   </ToolBox.Item>
                      :
-                  <ToolBox.Item heading="New Workout" href={`/workout/new`}>
+                  <ToolBox.Item heading="New Workout" href={`/workout`} params={() => 'new-id'}>
                      Start a new workout here
                   </ToolBox.Item>
                }
@@ -43,6 +43,15 @@ const Home = () => {
             </ToolBox>
          </div>
       </div>
+   )
+}
+
+const NewWorkoutLink = (props) => {
+
+   return (
+      <ToolBox.Item heading="New Workout" href={`/workout/new`}>
+         Start a new workout here
+      </ToolBox.Item>
    )
 }
 

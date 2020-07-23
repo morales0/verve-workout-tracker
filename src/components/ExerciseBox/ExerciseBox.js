@@ -8,6 +8,7 @@ import { Button } from '../index'
 
 const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) => {
    const {themeValue} = useContext(ThemeContext)
+   console.log(updateSet)
 
    return (
       <div className="exercise_box_container">
@@ -15,7 +16,7 @@ const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) =
             <h3>{exercise.name}</h3>
             <div>
                <span>{exercise.sets.length}</span>
-               <Button onClick={() => removeExercise(exercise.uid)}>
+               <Button onClick={() => removeExercise(exercise.eid)}>
                   <MinusIcon width="15px"/>
                </Button>
             </div>
@@ -28,7 +29,7 @@ const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) =
                         key={index} 
                         setNames={exercise.setNames} 
                         set={set} 
-                        updateSet={updateSet(exercise.uid, index)}
+                        updateSet={updateSet(exercise.eid, index)}
                      />
                   ))
                :
@@ -38,10 +39,10 @@ const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) =
                }
             </div>
             <div className="sets_control">
-               <button onClick={() => addSet(exercise.uid)}>
+               <button onClick={() => addSet(exercise.eid)}>
                   <PlusIcon width="20px"/>
                </button>
-               <button onClick={() => removeSet(exercise.uid)}>
+               <button onClick={() => removeSet(exercise.eid)}>
                   <MinusIcon width="20px"/>
                </button>
             </div>
