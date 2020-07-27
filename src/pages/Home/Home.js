@@ -1,11 +1,14 @@
 import React from 'react'
 import { useUser } from '../../context/user-context'
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components/macro'
 
 import { Button, ToolBox } from '../../components'
 
 const Home = () => {
    const {user} = useUser()
+
+   const getNewWorkoutID = () =>  uuidv4()
 
    return (
       <div css={`
@@ -35,7 +38,7 @@ const Home = () => {
                      Finish your workout!
                   </ToolBox.Item>
                      :
-                  <ToolBox.Item heading="New Workout" href={`/workout`} params={() => 'new-id'}>
+                  <ToolBox.Item heading="New Workout" href={`/workout`} params={() => getNewWorkoutID()}>
                      Start a new workout here
                   </ToolBox.Item>
                }

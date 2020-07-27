@@ -6,6 +6,7 @@ const newUser ={
    name: 'NEW USER',
    displayName: 'user',
    isWorkingOut: false,
+   currentWorkoutID: null,
    workouts: {}
 }
 

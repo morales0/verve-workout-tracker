@@ -1,5 +1,6 @@
 import Main from "./Main/Main"
 import Button from "./Button/Button"
+import Select from "./Select/Select"
 import ToolBox from "./ToolBox/ToolBox"
 import ExerciseBox from "./ExerciseBox/ExerciseBox"
 import Set from "./Set/Set"
@@ -14,6 +15,7 @@ import ThemeToggle from "./ThemeToggle/ThemeToggle"
 export {
    Main,
    Button,
+   Select,
    Navbar,
    Nav,
    UserNavIcon,

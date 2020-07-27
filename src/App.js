@@ -18,10 +18,7 @@ function App() {
 
   useEffect(() => {
     ls('theme', themeValue)
-    console.log('App re-render')
-  })
-  
-  console.log("Local Storage: ", localStorage)
+  }, [themeValue])
   
   return (
     <ThemeProvider theme={{themeValue, setThemeValue}}>
@@ -95,7 +92,9 @@ const GlobalStyle = createGlobalStyle`
 const BasicNavbar = (props) => {
   return (
     <Navbar>
-      <img src={verveLogo} alt="React Logo" width="45px"/>
+      <a href="/">
+        <img src={verveLogo} alt="React Logo" width="45px"/>
+      </a>
       <Nav justify="right">
         <a href="/">Workout</a>
         <a href="/">Contact</a>
@@ -103,19 +102,6 @@ const BasicNavbar = (props) => {
       <UserNavIcon />
     </Navbar>
   );
-}
-
-const WorkoutRouter = (props) => {
-  const {wid} = useParams()
-  let redirectWid = wid;
-  const [data, dispatch] = useGlobalState()
-
-  if (wid === 'new') {
-    dispatch({type: 'createNewWorkout'})
-    redirectWid = data.currentWorkoutID
-  }
-
-  return redirectWid === 'new' ? <div>Creating new workout</div> : <Workout wid={redirectWid}/>
 }
 
 export default App;

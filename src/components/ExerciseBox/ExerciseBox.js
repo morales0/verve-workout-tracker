@@ -7,8 +7,6 @@ import { Set } from '..'
 import { Button } from '../index'
 
 const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) => {
-   const {themeValue} = useContext(ThemeContext)
-   console.log(updateSet)
 
    return (
       <div className="exercise_box_container">

@@ -5,7 +5,7 @@ import { Button } from '../'
 import { Link } from 'react-router-dom'
 
 const ToolBoxItem2 = (props) => (
-   <Link to={`${props.href}/${props.params && props.params()}`}>
+   <Link to={`${props.href}/${props.params ? props.params() : ''}`}>
       <ToolBoxButton>
          {props.heading && 
          <h2 css={`

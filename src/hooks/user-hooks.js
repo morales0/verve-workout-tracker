@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { useUser } from '../context/user-context'
 import predefinedExercises from '../utils/predefined-exercises';
@@ -6,18 +6,21 @@ import predefinedExercises from '../utils/predefined-exercises';
 /* Workout hook */
 const useWorkout = (wid) => {
    const {user, dispatch} = useUser()
-   const workout = user.workouts[wid]
+   const [workout, setWorkout] = useState(user.workouts[wid])
+
+   useEffect(() => {
+      setWorkout(user.workouts[wid])
+   }, [user.workouts, wid])
 
    // Create new workout if needed
    if (!workout) {
-      console.log('Updating state...')
       dispatch({type: 'createNewWorkout', wid: wid})
    }
 
    // Define workout functions
    const addExercise = (name) => {
       const newUid = uuidv4()
-      const exercises = {...user.workouts[wid].exercises}
+      const exercises = {...workout.exercises}
 
       // Find the exercise model, otherwise create a new one
       let newExerciseModel = predefinedExercises[name]
@@ -42,7 +45,7 @@ const useWorkout = (wid) => {
    }
 
    const removeExercise = (eid) => {
-      const updatedExercises = {...user.workouts[wid].exercises}
+      const updatedExercises = {...workout.exercises}
       delete updatedExercises[eid]
 
       dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
@@ -51,18 +54,18 @@ const useWorkout = (wid) => {
    }
 
    const addSet = (eid) => {
-      console.log('workout', user.workouts[wid].exercises[eid])
+      console.log('workout', workout.exercises[eid])
       console.log('eid', eid)
       // First create new set using setnames
       const newSet = {}
-      user.workouts[wid].exercises[eid].setNames.forEach((name) => {
+      workout.exercises[eid].setNames.forEach((name) => {
          newSet[name] = 0;
       })
 
       // Dispatch: updateExercise
       dispatch({type: 'updateExercise', wid: wid, eid: eid, exerciseUpdates: {
          sets: [
-            ...user.workouts[wid].exercises[eid].sets,
+            ...workout.exercises[eid].sets,
             newSet
          ]
       }})
@@ -70,7 +73,7 @@ const useWorkout = (wid) => {
 
    const removeSet = (eid) => {
       // Remove last set from set array
-      const newSetArray = [...user.workouts[wid].exercises[eid].sets]
+      const newSetArray = [...workout.exercises[eid].sets]
       newSetArray.pop();
 
       // Dispatch: updateExercise
@@ -82,7 +85,7 @@ const useWorkout = (wid) => {
    const updateSet = (eid, setIndex) => (setName, newValue) => {
       console.log(eid, setIndex, newValue)
       // Create and update the new set
-      const newSetArray = [...user.workouts[wid].exercises[eid].sets]
+      const newSetArray = [...workout.exercises[eid].sets]
       newSetArray[setIndex][setName] = newValue
 
       // Dispatch: updateExercise
@@ -91,14 +94,27 @@ const useWorkout = (wid) => {
       }})
    }
 
+   const completeWorkout = () => {
+
+      dispatch({type: "updateUser", userUpdates: {
+         isWorkingOut: false,
+         currentWorkoutID: null,
+      }})
+
+      dispatch({type: "updateWorkout", wid: wid, workoutUpdates: {
+         completed: true
+      }})
+   }
+
 
    return [
-      user.workouts[wid],
-      (name) => addExercise(name),
-      (eid) => removeExercise(eid),
-      (eid) => addSet(eid),
-      (eid) => removeSet(eid),
-      updateSet
+      workout,
+      addExercise,
+      removeExercise,
+      addSet,
+      removeSet,
+      updateSet, 
+      completeWorkout
    ]
 }
 
