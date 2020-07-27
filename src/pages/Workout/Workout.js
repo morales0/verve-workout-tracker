@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
 import './Workout.scss'
-import { devices } from '../../css/media'
-
-// DEV
-import initial_state from '../../context/test_initial_data'
+//import { devices } from '../../css/media'
 
 // Hooks and context
 import { useWorkout } from '../../hooks/user-hooks'
 import { usePopUp } from '../../hooks/component-hooks'
-import { useUser } from '../../context/user-context'
 
 // Components
-import { Button, ExerciseBox, Select } from '../../components'
+import { Button, ExerciseBox } from '../../components'
 import { useParams, Link } from 'react-router-dom'
 
 
@@ -22,7 +18,12 @@ const Workout = (props) => {
 
    return !workout ? null : (
       <div className="workout_page">
-         <Dropdown label="EXERCISES">
+         <Dropdown label="EXERCISES" css={`
+            position: absolute;
+            right: 1.5rem;
+            margin-top: .7rem;
+            z-index: 50;
+         `}>
             <Item>
                <button onClick={() => addExercise("Pushups")} css={`
                   display: flex;
