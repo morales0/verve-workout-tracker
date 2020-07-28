@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
+import { isMobile } from 'react-device-detect'
 import './Workout.scss'
 //import { devices } from '../../css/media'
 
@@ -61,7 +62,6 @@ const Workout = (props) => {
             </header>
             <div>
                {Object.values(workout.exercises).map((exercise, index) => {
-                  console.log(exercise)
                   return (
                   <ExerciseBox 
                      key={index} exercise={exercise}
@@ -197,7 +197,7 @@ const Item = (props) => {
          }
 
          &:hover {
-            background: #a9a9a9;
+            ${isMobile ? '' : 'background-color: #eee;'}
          }
       `}>
          {props.children}

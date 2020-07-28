@@ -1,8 +1,8 @@
 import React from 'react'
 // eslint-disable-next-line no-unused-vars
 import styled from 'styled-components/macro'
-import { useNumberInput } from '../../hooks'
-import { StyledNumberInput } from '..'
+import { useNumberInput } from '../../../hooks'
+import { StyledNumberInput } from '../..'
 
 /**
  * Handles a single input value inside a set container.

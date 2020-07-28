@@ -1,10 +1,10 @@
 import React, {useContext} from 'react'
 import styled, {ThemeContext} from 'styled-components/macro'
 
-import { ReactComponent as AddSVG } from '../../images/plus.svg'
-import { ReactComponent as MinusSVG } from '../../images/minus.svg'
-import { Set } from '..'
-import { Button } from '../index'
+import { ReactComponent as AddSVG } from '../../../images/plus.svg'
+import { ReactComponent as MinusSVG } from '../../../images/minus.svg'
+import { Set } from '../..'
+import { Button } from '../..'
 
 const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) => {
 

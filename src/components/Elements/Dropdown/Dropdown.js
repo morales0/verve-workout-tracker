@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
-import { usePopUp } from '../../hooks/component-hooks'
+import { usePopUp } from '../../../hooks/component-hooks'
 import styled from 'styled-components/macro'
+import {isMobile} from 'react-device-detect'
 
-import { Button } from '..'
+import { Button } from '../..'
 
 const Dropdown = (props) => {
    const wrapperRef = useRef(null);
@@ -66,10 +67,6 @@ const Dropdown = (props) => {
    )
 }
 
-const DropdownButton = styled(Button)`
-
-`
-
 const DropdownTriangleIcon = styled.div`
    width: 0;
    height: 0;
@@ -95,7 +92,7 @@ const Item = (props) => {
          }
 
          &:hover {
-            background: #a9a9a9;
+            ${isMobile ? '' : 'background-color: #eee;'}
          }
       `}>
          {props.children}
@@ -103,7 +100,7 @@ const Item = (props) => {
    )
 }
 
-const ItemButton = styled.button`
+/* const ItemButton = styled.button`
 
 `
 
@@ -122,6 +119,6 @@ const ItemDiv = styled.div`
 Item.Button = ItemButton
 Item.Link = ItemLink
 Item.Text = ItemText
-Item.Div = ItemDiv
+Item.Div = ItemDiv */
 
 export { Dropdown, Item }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
-import { darkTheme, lightTheme } from '../../context/themes'
-import { Button } from '..'
+import { darkTheme, lightTheme } from '../../../css/themes'
+import { Button } from '../..'
 
 const ThemeToggleButton = styled(Button)`
 

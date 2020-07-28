@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { SetNameInput } from '..'
+import { SetNameInput } from '../..'
 
 const Set = ({setNames, set, updateSet}) => {
    console.log(updateSet)

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-import { Button } from '../'
+import { Button } from '../..'
 import { Link } from 'react-router-dom'
 
 const ToolBoxItem2 = (props) => (

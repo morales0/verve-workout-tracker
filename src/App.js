@@ -4,13 +4,13 @@ import {BrowserRouter as Router, Route, Switch, useParams} from 'react-router-do
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
 import ls from 'local-storage'
 
-import { Main, Navbar, Nav, UserNavIcon } from './components'
+import { Main, Navbar, Nav, UserNavIcon, Button } from './components'
 import { Home, Workout } from './pages'
 
 import logo from './logo.svg';
 import './App.css';
 import verveLogo from './images/verve_fire_logo_1.svg'
-import { lightTheme } from './context/themes'
+import { lightTheme } from './css/themes'
 import { useGlobalState } from './hooks/useGlobalState';
 
 function App() {
@@ -64,11 +64,10 @@ function App() {
             <Route path="/workout/:wid">
               <Workout/>
             </Route>
-
             
-
             <Route path="/" exact={true}>
               <Home/>
+              <Button />
             </Route>
 
             <Route path="*">

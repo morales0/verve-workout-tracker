@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 
 import styled from 'styled-components/macro'
 
-import { ThemeToggle } from '..'
+import { ThemeToggle } from '../..'
 
 const usePopUp = (ref) => {
    const [toggle, setToggle] = useState(false)
