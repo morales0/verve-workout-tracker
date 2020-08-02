@@ -5,13 +5,14 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components/macr
 import ls from 'local-storage'
 
 import { Main, Navbar, Nav, UserNavIcon, Button } from './components'
-import { Home, Workout } from './pages'
+import { Home, Workout, Gains } from './pages'
 
 import logo from './logo.svg';
 import './App.css';
 import verveLogo from './images/verve_fire_logo_1.svg'
 import { lightTheme } from './css/themes'
 import { useGlobalState } from './hooks/useGlobalState';
+import ViewComponents from './pages/ViewComponents/ViewComponents';
 
 function App() {
   const [themeValue, setThemeValue] = useState(ls('theme') ? ls('theme') : lightTheme)
@@ -40,6 +41,14 @@ function App() {
               <BasicNavbar />
             </Route>
 
+            <Route path="/gains">
+              <BasicNavbar />
+            </Route>
+
+            <Route path="/viewcomponents">
+              <BasicNavbar />
+            </Route>
+
             <Route path="/" exact={true}>
               <BasicNavbar />
             </Route>
@@ -63,6 +72,14 @@ function App() {
 
             <Route path="/workout/:wid">
               <Workout/>
+            </Route>
+
+            <Route path="/gains">
+              <Gains />
+            </Route>
+
+            <Route path="/viewcomponents">
+              <ViewComponents />
             </Route>
             
             <Route path="/" exact={true}>
@@ -97,6 +114,7 @@ const BasicNavbar = (props) => {
       <Nav justify="right">
         <a href="/">Workout</a>
         <a href="/">Contact</a>
+        <a href="/viewcomponents">Test Components</a>
       </Nav>
       <UserNavIcon />
     </Navbar>

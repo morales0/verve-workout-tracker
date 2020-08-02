@@ -11,33 +11,10 @@ const Dropdown = (props) => {
 
    return (
       <div ref={wrapperRef}>
-         <Button css={`
-            width: ${open ? '300px' : '150px'};
-            @media only screen and (max-width: 500px) {
-               width: 170px;
-            }
-            background: ${props => props.theme.themeValue.offBG};
-            border: none;
-            box-shadow: 0 0 10px 0 #00000025;
-            border-radius: 15px;
-            padding: 1rem .75rem;
-            /* font-size: 1.2rem; */
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            outline: none;
-            transition: width .5s;
-            -webkit-tap-highlight-color: transparent;
-
-            &: hover {
-               background: ${props => props.theme.themeValue.offBG};
-               cursor: pointer;
-            }
-         `} onClick={() => setOpen(!open)}>
+         <DropdownButton open={open} onClick={() => setOpen(!open)}>
             {props.label}
             <DropdownTriangleIcon open={open} />
-         </Button>
+         </DropdownButton>
             <div css={`
                position: absolute;
                max-height: 400px;
@@ -66,6 +43,31 @@ const Dropdown = (props) => {
       
    )
 }
+
+const DropdownButton = styled(Button)`
+   width: ${props => props.open ? '300px' : '150px'};
+   @media only screen and (max-width: 500px) {
+      width: 170px;
+   }
+   background: ${props => props.theme.themeValue.offBG};
+   border: none;
+   box-shadow: 0 0 10px 0 #00000025;
+   border-radius: 15px;
+   padding: 1rem .75rem;
+   /* font-size: 1.2rem; */
+   font-weight: 700;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   outline: none;
+   transition: width .5s;
+   -webkit-tap-highlight-color: transparent;
+
+   &: hover {
+      background: ${props => props.theme.themeValue.offBG};
+      cursor: pointer;
+   }
+`
 
 const DropdownTriangleIcon = styled.div`
    width: 0;

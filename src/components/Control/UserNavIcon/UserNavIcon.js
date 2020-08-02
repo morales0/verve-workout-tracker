@@ -8,16 +8,18 @@ const usePopUp = (ref) => {
    const [toggle, setToggle] = useState(false)
 
    useEffect(() => {
-       // Bind the event listener
-       document.addEventListener("mousedown", (e) => {
+      const clickOut = (e) => {
          if (ref.current && !ref.current.contains(e.target)) {
             setToggle(false);
          }
-       });
+      }
+
+       // Bind the event listener
+       document.addEventListener("mousedown", clickOut)
 
        return () => {
            // Unbind the event listener on clean up
-           document.removeEventListener("mousedown");
+           document.removeEventListener("mousedown", clickOut);
        };
    }, [ref]);
 
