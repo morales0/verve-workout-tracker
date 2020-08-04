@@ -49,6 +49,15 @@ const Workout = (props) => {
                   <span>+</span>
                </div>
             </Item>
+            <Item>
+            <div css={`
+                  display: flex;
+                  justify-content: space-between;
+               `}>
+                  <span>Custom exercise</span>
+                  <span>+</span>
+               </div>
+            </Item>
          </Dropdown>
          <section className="exercises_section" css={`flex: 1`}>
             <header css={` background: ${props => props.theme.themeValue.mainBG}90;`}>
@@ -80,18 +89,7 @@ const Workout = (props) => {
             </header>
    
             <div>
-               {
-               Object.entries(workout.exercises).length === 0 ? <p css={`margin: auto`}>None completed yet</p>
-               : Object.values(workout.exercises).map((exercise, index) => {
-                  return (
-                  <ExerciseBox 
-                     key={index} exercise={exercise}
-                     removeExercise={removeExercise}
-                     addSet={addSet} removeSet={removeSet}
-                     updateSet={updateSet}
-                  />
-                  )
-               })}
+               None completed yet
             </div>
 
             <Link to="/">

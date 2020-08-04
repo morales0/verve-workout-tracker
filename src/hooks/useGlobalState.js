@@ -24,8 +24,8 @@ const globalReducer = (state, action) => {
                [action.wid]: {
                   wid: action.wid,
                   completed: false,
-                  dateStarted: now.toISOString,
-                  timeStarted: now.getTime,
+                  dateStarted: now.toISOString(),
+                  timeStarted: now.getTime(),
                   timeEnded: null,
                   exercises: {}
                },
