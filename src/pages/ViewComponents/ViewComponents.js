@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import './ViewComponents.scss'
 import ButtonsView from '../TestPages/ButtonsView'
 import styled from 'styled-components/macro'
+import DropdownView from '../TestPages/DropdownView'
 
 const ViewComponents = () => {
-   const [component, setComponent] = useState('Button')
+   const [component, setComponent] = useState('Dropdown')
 
    return (
       <div className="test_container">
@@ -30,6 +31,8 @@ const ComponentPage = ({type}) => {
    switch (type) {
       case 'Button':
          return <ButtonsView />
+      case 'Dropdown':
+         return <DropdownView />
       default:
          return <div>{type} not supported yet</div>
    }

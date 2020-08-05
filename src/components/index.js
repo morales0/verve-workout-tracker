@@ -2,6 +2,9 @@
 import Main from "./Elements/Main/Main"
 import Button from "./Elements/Button/Button"
 import { Dropdown, Item } from "./Elements/Dropdown/Dropdown"
+import DropdownButton from "./Elements/DropdownButton/DropdownButton"
+import DropdownContainer from './Elements/DropdownContainer/DropdownContainer'
+import TriangleIcon from './Elements/TriangleIcon/TriangleIcon'
 import ToolBox from "./Elements/ToolBox/ToolBox"
 import StyledNumberInput from "./Elements/StyledNumberInput/StyledNumberInput"
 import ThemeToggle from "./Elements/ThemeToggle/ThemeToggle"
@@ -19,7 +22,10 @@ export {
    Main,
    Button,
    Dropdown,
+   DropdownButton,
+   DropdownContainer,
    Item,
+   TriangleIcon,
    Navbar,
    Nav,
    UserNavIcon,

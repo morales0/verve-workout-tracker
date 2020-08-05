@@ -12,11 +12,6 @@ const useWorkout = (wid) => {
       setWorkout(user.workouts[wid])
    }, [user.workouts, wid])
 
-   // Create new workout if needed
-   if (!workout) {
-      dispatch({type: 'createNewWorkout', wid: wid})
-   }
-
    // Define workout functions
    const addExercise = (name) => {
       const newUid = uuidv4()

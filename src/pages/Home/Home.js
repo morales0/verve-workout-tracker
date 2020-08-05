@@ -8,7 +8,7 @@ import { Button, ToolBox } from '../../components'
 const Home = () => {
    const {user} = useUser()
 
-   const getNewWorkoutID = () =>  uuidv4()
+   const getNewWorkoutID = () => uuidv4()
 
    return (
       <div css={`
@@ -38,7 +38,7 @@ const Home = () => {
                      Finish your workout!
                   </ToolBox.Item>
                      :
-                  <ToolBox.Item heading="New Workout" href={`/workout`} params={() => getNewWorkoutID()}>
+                  <ToolBox.Item heading="New Workout" href="/workout/new">
                      Start a new workout here
                   </ToolBox.Item>
                }

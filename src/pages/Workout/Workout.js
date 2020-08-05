@@ -10,14 +10,14 @@ import { usePopUp } from '../../hooks/component-hooks'
 
 // Components
 import { Button, ExerciseBox } from '../../components'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Redirect } from 'react-router-dom'
 
 
 const Workout = (props) => {
    const {wid} = useParams() // Get wid from url
    const [workout, addExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
 
-   return !workout ? null : (
+   return !workout ? <Redirect to="/" /> : (
       <div className="workout_page">
          <Dropdown label="EXERCISES" css={`
             position: absolute;

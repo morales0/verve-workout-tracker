@@ -3,8 +3,8 @@ import ls from 'local-storage'
 import { useGlobalState } from '../hooks/useGlobalState'
 
 const newUser ={
-   name: 'NEW USER',
-   displayName: 'user',
+   name: 'Verver',
+   displayName: 'V',
    isWorkingOut: false,
    currentWorkoutID: null,
    workouts: {}
@@ -55,13 +55,14 @@ const AuthProvider = (props) => {
    // Authentication protocols
 	const login = () => {
       console.log("User requested to login")
-   }; // make a login request
+   };
 	const register = () => {
       console.log("User requested to register")
-   }; // register the user
+   };
 	const logout = () => {
       console.log("User requested to log out")
-   }; // clear the token in localStorage and the user data
+      // clear the token in localStorage and the user data
+   }; 
 
    // Render children when authentication is finished
    return (
@@ -73,4 +74,4 @@ const useAuth = () => {
    return useContext(AuthContext)
 }
 
-export { useAuth, AuthProvider }
+export { AuthProvider, useAuth }
