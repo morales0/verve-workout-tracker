@@ -9,7 +9,7 @@ import { useWorkout } from '../../hooks/user-hooks'
 import { usePopUp } from '../../hooks/component-hooks'
 
 // Components
-import { Button, ExerciseBox, Dropdown, Item } from '../../components'
+import { Button, ExerciseBox, Dropdown, Item, ExerciseDropdownItem } from '../../components'
 import { useParams, Link, Redirect } from 'react-router-dom'
 
 
@@ -25,46 +25,16 @@ const Workout = (props) => {
             margin-top: .7rem;
             z-index: 50;
          `}>
-            <Item name="Pushups">
-               <button onClick={() => addExercise("Pushups")} css={`
-                  display: flex;
-                  justify-content: space-between;
-                  
-                  cursor: pointer;
-                  font-family: inherit;
-                  color: inherit;
-                  border: none;
-                  outline: none;
-               `}>
-                  <span>Pushups</span>
-                  <span>+</span>
-               </button>
-            </Item>
-            <Item name="Body Squats">
-               <div css={`
-                  display: flex;
-                  justify-content: space-between;
-               `}>
-                  <span>Body Squats</span>
-                  <span>+</span>
-               </div>
-            </Item>
-            <Item name="Custom">
-            <div css={`
-                  display: flex;
-                  justify-content: space-between;
-               `}>
-                  <span>Custom</span>
-                  <span>+</span>
-               </div>
-            </Item>
+            <ExerciseDropdownItem name="Custom" onClick={() => console.log("Custom")} />
+            <ExerciseDropdownItem name="Pushups" onClick={addExercise}/>
+            <ExerciseDropdownItem name="Bulgarian Split Squats" onClick={() => console.log("Split Squats")} />
          </Dropdown>
 
          <section className="exercises_section" css={`flex: 1`}>
             <header css={`background: ${props => props.theme.themeValue.mainBG}90;`}>
                <h1>EXERCISES</h1>
             </header>
-            <div>
+            <div className="exercises">
                {Object.values(workout.exercises).map((exercise, index) => {
                   return (
                   <ExerciseBox 
@@ -83,15 +53,18 @@ const Workout = (props) => {
                <h1>COMPLETED</h1>
             </header>
    
-            <div>
+            <div className="empty">
                None completed yet
             </div>
 
-            <Link to="/">
-               <Button onClick={() => completeWorkout()}>
-                  Complete Workout
-               </Button>
+            <div className="complete_workout_footer">
+               <Link to="/">
+                  <Button disabled={true} size="small" bgColor="#a5dca5" onClick={() => completeWorkout()}>
+                     COMPLETE WORKOUT
+                  </Button>
                </Link>
+            </div>
+            
          </section>
       </div>
    )

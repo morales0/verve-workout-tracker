@@ -2,6 +2,7 @@
 import Main from "./Elements/Main/Main"
 import Button from "./Elements/Button/Button"
 import { Dropdown, Item } from "./Elements/Dropdown/Dropdown"
+import ExerciseDropdownItem from "./Elements/ExerciseDropdownItem/ExerciseDropdownItem"
 import DropdownButton from "./Elements/DropdownButton/DropdownButton"
 import DropdownContainer from './Elements/DropdownContainer/DropdownContainer'
 import TriangleIcon from './Elements/TriangleIcon/TriangleIcon'
@@ -18,6 +19,7 @@ import Navbar from "./Control/Navbar/Navbar"
 import UserNavIcon from "./Control/UserNavIcon/UserNavIcon"
 
 
+
 export {
    Main,
    Button,
@@ -25,6 +27,7 @@ export {
    DropdownButton,
    DropdownContainer,
    Item,
+   ExerciseDropdownItem,
    TriangleIcon,
    Navbar,
    Nav,

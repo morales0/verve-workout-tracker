@@ -9,7 +9,7 @@ const sizes = {
    },
    'medium': {
       fontSize: '1rem',
-      padding: '.75rem 1rem',
+      padding: '1rem 1rem',
    },
    'large': {
       fontSize: '1.25rem',
@@ -26,17 +26,19 @@ const Button = styled.button`
    height: fit-content;
    padding: ${props => props.size ? sizes[props.size].padding : sizes['small'].padding};
    font-size: ${props => props.size ? sizes[props.size].fontSize : sizes['small'].fontSize};
-   background: ${props => props.bg || 'transparent'};
+   background: ${props => props.disabled ? '#ddd' : (props.bgColor || props.theme.themeValue.offBG)};
+   border: none;
+   border-radius: 15px;
+   box-shadow: 0 0 10px 0 #00000025;
    color: inherit;
-   border: 2px solid #525252;
-   border-radius: 5px;
+   font-family: inherit;
    
    cursor: pointer;
 
    transition: .35s;
 
    &:hover {
-      ${isMobile ? '' : 'background-color: #eee;'}
+      ${props => isMobile || props.disabled ? '' : 'filter: brightness(1.1);'}
    }
 `;
 
