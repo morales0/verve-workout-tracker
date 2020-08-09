@@ -9,13 +9,11 @@ import { AuthProvider } from './context/auth-context'
 import { UserProvider } from './context/user-context'
 
 ReactDOM.render(
-  <React.StrictMode>
     <AuthProvider>
       <UserProvider>
         <App />
       </UserProvider>
-    </AuthProvider>
-  </React.StrictMode>,
+    </AuthProvider>,
   document.getElementById('root')
 );
 

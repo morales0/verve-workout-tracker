@@ -8,7 +8,6 @@ const DropdownButton = ({children, open, grow, ...rest}) => {
    const [buttonWidth, setButtonWidth] = useState('auto')
 
    useEffect(() => {
-      console.log(buttonRef)
       setButtonWidth(buttonRef.current.offsetWidth + 1)
    }, [])
 

@@ -12,23 +12,31 @@ const Dropdown = (props) => {
    const [open, setOpen] = usePopUp(wrapperRef);
 
    return (
-      <div ref={wrapperRef} css={`
-         position: relative;
-      `}>
-         <DropdownButton open={open} grow={props.grow} onClick={() => setOpen(!open)}>
-            {props.label}
-         </DropdownButton>
-         <DropdownContainer open={open}>
-            {props.children}
-         </DropdownContainer>
+      <div className={props.className}>
+         <div ref={wrapperRef} css={`position: relative; z-index: 50;`}>
+            <DropdownButton open={open} grow={props.grow} onClick={() => setOpen(!open)}>
+               {props.label}
+            </DropdownButton>
+            <DropdownContainer open={open}>
+               
+               {/* <div css={`
+                  padding: 0!important;
+                  border: none!important;
+                  text-align: center!important;
+               `}> 
+               
+               </div>*/}
+               {props.children}
+            </DropdownContainer>
+         </div>
       </div>
-      
    )
 }
 
 const Item = (props) => {
    return (
       <div css={`
+         display: flex;
          cursor: pointer;
          color: #424242;
 
@@ -36,14 +44,20 @@ const Item = (props) => {
             padding: 1rem;
             background: transparent;
             width: 100%;
-            font-size: 1rem;
          }
+
+         /* &> div, span {
+            padding: 1rem;
+            background: transparent;
+            width: 100%;
+            font-size: 1rem;
+         } */
 
          &:hover {
             ${isMobile ? '' : 'background-color: #eee;'}
          }
       `}>
-         <div>{props.children}</div>
+         {props.children}
       </div>
    )
 }
