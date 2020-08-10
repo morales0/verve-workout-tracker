@@ -5,7 +5,7 @@ import {Item} from '../Dropdown/Dropdown'
 const ExerciseDropdownItem = (props) => {
    return (
       <Item name={props.name || ""}>
-         <button onClick={() => props.onClick(props.name)} css={`
+         <button onClick={props.onClick} css={`
             display: flex;
             justify-content: space-between;
             align-items: center;

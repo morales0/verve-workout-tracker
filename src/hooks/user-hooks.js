@@ -13,17 +13,17 @@ const useWorkout = (wid) => {
    }, [user.workouts, wid])
 
    // Define workout functions
-   const addExercise = (name) => {
+   const addExercise = (name, setNames) => {
       const newUid = uuidv4()
       const exercises = {...workout.exercises}
 
       // Find the exercise model, otherwise create a new one
-      let newExerciseModel = predefinedExercises[name]
+      /* let newExerciseModel = predefinedExercises[name]
 
       if (!newExerciseModel) newExerciseModel = {
          name: name,
          setNames: ['reps']
-      }
+      } */
 
       // Run update on global user state
       dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
@@ -31,7 +31,8 @@ const useWorkout = (wid) => {
             [newUid]: {
                eid: newUid,
                completed: false,
-               ...newExerciseModel,
+               name: name,
+               setNames: setNames,
                sets: [],
             },
             ...exercises,
@@ -104,6 +105,7 @@ const useWorkout = (wid) => {
 
    return [
       workout,
+      user.exerciseTypes,
       addExercise,
       removeExercise,
       addSet,

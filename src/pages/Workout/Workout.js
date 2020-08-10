@@ -15,7 +15,9 @@ import { useParams, Link, Redirect } from 'react-router-dom'
 
 const Workout = (props) => {
    const {wid} = useParams() // Get wid from url
-   const [workout, addExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
+   const [workout, exerciseTypes, addExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
+
+   console.log(exerciseTypes);
 
    return !workout ? <Redirect to="/" /> : (
       <div className="workout_page">
@@ -26,8 +28,10 @@ const Workout = (props) => {
             z-index: 50;
          `}>
             <ExerciseDropdownItem name="Custom" onClick={() => console.log("Custom")} />
-            <ExerciseDropdownItem name="Pushups" onClick={addExercise}/>
-            <ExerciseDropdownItem name="Bulgarian Split Squats" onClick={() => console.log("Split Squats")} />
+            {exerciseTypes.map((type, index) => {
+               return <ExerciseDropdownItem key={index} name={type.name} 
+                        onClick={() => addExercise(type.name, type.setNames)} />
+            })}
          </Dropdown>
 
          <section className="exercises_section" css={`flex: 1`}>
@@ -38,7 +42,7 @@ const Workout = (props) => {
                {Object.values(workout.exercises).map((exercise, index) => {
                   return (
                   <ExerciseBox 
-                     key={index} exercise={exercise}
+                     key={exercise.eid} exercise={exercise}
                      removeExercise={removeExercise}
                      addSet={addSet} removeSet={removeSet}
                      updateSet={updateSet}

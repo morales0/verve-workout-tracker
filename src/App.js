@@ -77,7 +77,10 @@ const App = () => {
             </Route>
 
             <Route path="/workout/new">
-              <CreateWorkout /> 
+              {
+                user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutID}`} /> :
+                <CreateWorkout />
+              }
             </Route>
 
             <Route path="/workout/:wid">

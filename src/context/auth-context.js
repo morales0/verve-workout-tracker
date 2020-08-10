@@ -7,6 +7,32 @@ const newUser ={
    displayName: 'V',
    isWorkingOut: false,
    currentWorkoutID: null,
+   exerciseTypes: [
+      {
+         name: 'Pushups',
+         setNames: ['reps']
+      },
+      {
+         name: 'Pullups',
+         setNames: ['reps']
+      },
+      {
+         name: 'Bench Press',
+         setNames: ['weight', 'reps']
+      },
+      {
+         name: 'Shoulder Press',
+         setNames: ['weight', 'reps']
+      },
+      {
+         name: 'Body Squats',
+         setNames: ['reps'],
+      },
+      {
+         name: 'Dumbell Squats',
+         setNames: ['weight', 'reps']
+      }
+   ],
    workouts: {}
 }
 
