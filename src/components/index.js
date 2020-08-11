@@ -12,6 +12,7 @@ import ThemeToggle from "./Elements/ThemeToggle/ThemeToggle"
 import Nav from "./Elements/Nav/Nav"
 
 // Functional control components
+import CreateExerciseWidget from './Control/CreateExerciseWidget/CreateExerciseWidget'
 import ExerciseBox from "./Control/ExerciseBox/ExerciseBox"
 import Set from "./Control/Set/Set"
 import SetNameInput from "./Control/SetNameInput/SetNameInput"

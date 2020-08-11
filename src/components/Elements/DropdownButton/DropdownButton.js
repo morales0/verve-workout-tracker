@@ -8,6 +8,7 @@ const DropdownButton = ({children, open, grow, ...rest}) => {
    const [buttonWidth, setButtonWidth] = useState('auto')
 
    useEffect(() => {
+      console.log(buttonRef)
       setButtonWidth(buttonRef.current.offsetWidth + 1)
    }, [])
 
@@ -36,11 +37,12 @@ const StyledButton = styled(Button)`
    justify-content: space-between;
    align-items: center;
    padding: 1rem .75rem;
-   width: ${props => {
+   width: auto; /* ${props => {
+      console.log(props.initialWidth)
       if (props.initialWidth === 'auto') return 'auto'
 
       return props.open ? props.initialWidth + props.growWidth + 'px' : props.initialWidth + 'px'
-   }};
+   }}; */
    background: ${props => props.theme.themeValue.offBG};
    box-shadow: 0 0 10px 0 #00000025;
    border: none;

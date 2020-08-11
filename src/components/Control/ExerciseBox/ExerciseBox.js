@@ -72,28 +72,33 @@ const ExerciseControl = (props) => {
 
          & > button {
             flex: 1;
+            margin: 0;
             padding: .5rem .5rem;
-            width: 100%;
+            /* width: 100%; */
             background: transparent;
             outline: none;
             border: none;
             border-radius: 0;
             appearance: none;
-            text-align: left;
+            text-align: center;
             cursor: pointer;
 
             &:hover {
-               filter: brightness(.9);
+               /* filter: brightness(.9); */
             }
          }
 
-         /* & > button.remove_exercise {
+       & > button.remove_exercise {
+          &:hover{
             background: #ffc6c4;
+          }
          }
 
          & > button.complete_exercise {
-            background: #c9ffd7;
-         } */
+            &:hover{
+               background: #c9ffd7;
+            }
+         }
 
          & > button + button {
             border-top: 1px solid #a9a9a9;

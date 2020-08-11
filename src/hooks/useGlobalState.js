@@ -27,7 +27,8 @@ const globalReducer = (state, action) => {
                   dateStarted: now.toISOString(),
                   timeStarted: now.getTime(),
                   timeEnded: null,
-                  exercises: {}
+                  exercises: {},
+                  completedExercises: {},
                },
                // Add the new workout to the top
                ...state.workouts
