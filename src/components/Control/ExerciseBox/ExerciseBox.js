@@ -7,12 +7,12 @@ import { ReactComponent as MoreSVG } from '../../../images/3_dots.svg'
 import { Set } from '../..'
 import { Button } from '../..'
 
-const ExerciseBox = ({exercise, removeExercise, addSet, removeSet, updateSet}) => {
+const ExerciseBox = ({exercise, removeExercise, completeExercise, addSet, removeSet, updateSet}) => {
    const [settings, setSettings] = useState(false)
 
    return (
       <div className="exercise_box_container">
-         {settings && <ExerciseControl remove={() => removeExercise(exercise.eid)} complete={() => console.log('complete')}/>}
+         {settings && <ExerciseControl remove={() => removeExercise(exercise.eid)} complete={() => completeExercise(exercise.eid)}/>}
          <header className="exercise_box_header">
             <h3>{exercise.name}</h3>
             <div>

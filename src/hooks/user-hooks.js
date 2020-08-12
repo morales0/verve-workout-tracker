@@ -40,6 +40,21 @@ const useWorkout = (wid) => {
       }})
    }
 
+   const completeExercise = (eid) => {
+      const exercises = {...workout.exercises}
+      const completedExercises = {...workout.completedExercises}
+
+      // Remove the eid from exercises and save
+      const completedExercise = exercises[eid]
+      delete exercises[eid]
+      completedExercises[eid] = completedExercise
+
+      dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
+         exercises: exercises,
+         completedExercises: completedExercises
+      }})
+   }
+
    const removeExercise = (eid) => {
       const updatedExercises = {...workout.exercises}
       delete updatedExercises[eid]
@@ -107,6 +122,7 @@ const useWorkout = (wid) => {
       workout,
       user.exerciseTypes,
       addExercise,
+      completeExercise,
       removeExercise,
       addSet,
       removeSet,
