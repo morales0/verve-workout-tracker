@@ -41,9 +41,13 @@ const Workout = (props) => {
 
          {
             Object.keys(workout.completedExercises).length !== 0 && Object.keys(workout.exercises).length === 0 ? null :
-            <section className="exercises_section">
-               <header css={`background: ${props => props.theme.themeValue.mainBG}90;`}>
-                  <h1>My Workout</h1>
+            <section className="exercises_section" >
+               <header css={`
+                  color: #3c4646;
+                  background: #daedfd8f;
+                  border-bottom: 1px solid #b3b3b3;
+               `}>
+                  <h1 css={`font-variant: petite-caps;`}>Workout</h1>
                </header>
                <div className="exercises">
                   {Object.values(workout.exercises).map((exercise, index) => {
@@ -62,9 +66,13 @@ const Workout = (props) => {
          {
             // Only show the completed section if the user has actually completed exercises
             Object.keys(workout.completedExercises).length === 0 ? null :
-            <section className="exercises_section">
-               <header>
-                  <h1>Completed</h1>
+            <section className="exercises_section" >
+               <header css={`
+                  color: #3c4646;
+                  background: #d5f7dc8f;
+                  border-bottom: 1px solid #b3b3b3;
+               `}>
+                  <h1 css={`font-variant: petite-caps;`}>Completed</h1>
                </header>
       
                <div className="exercises">
