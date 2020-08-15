@@ -7,12 +7,17 @@ import { ReactComponent as MoreSVG } from '../../../images/3_dots.svg'
 import { Set } from '../..'
 import { Button } from '../..'
 
-const ExerciseBox = ({exercise, removeExercise, completeExercise, addSet, removeSet, updateSet}) => {
+const ExerciseBox = ({wid, exercise, completed, unCompleteExercise, removeExercise, completeExercise, addSet, removeSet, updateSet}) => {
    const [settings, setSettings] = useState(false)
 
    return (
       <div className="exercise_box_container">
-         {settings && <ExerciseControl remove={() => removeExercise(exercise.eid)} complete={() => completeExercise(exercise.eid)}/>}
+         {settings && <ExerciseControl 
+            completed={completed}
+            remove={() => removeExercise(exercise.eid)} 
+            complete={() => completeExercise(exercise.eid)}
+            edit={() => unCompleteExercise(exercise.eid)}/>
+         }
          <header className="exercise_box_header">
             <h3>{exercise.name}</h3>
             <div>
@@ -28,9 +33,11 @@ const ExerciseBox = ({exercise, removeExercise, completeExercise, addSet, remove
                   exercise.sets.map((set, index) => (
                      <Set 
                         key={index} 
+                        wid={wid}
+                        eid={exercise.eid}
                         setNames={exercise.setNames} 
-                        set={set} 
-                        updateSet={updateSet(exercise.eid, index)}
+                        setIndex={index}
+                        completed={completed}
                      />
                   ))
                :
@@ -39,14 +46,17 @@ const ExerciseBox = ({exercise, removeExercise, completeExercise, addSet, remove
                   </h4>
                }
             </div>
-            <div className="sets_control">
-               <button onClick={() => addSet(exercise.eid)}>
-                  <PlusIcon width="20px"/>
-               </button>
-               <button onClick={() => removeSet(exercise.eid)}>
-                  <MinusIcon width="20px"/>
-               </button>
-            </div>
+            {
+               !completed &&
+               <div className="sets_control">
+                  <button onClick={() => addSet(exercise.eid)}>
+                     <PlusIcon width="20px"/>
+                  </button>
+                  <button onClick={() => removeSet(exercise.eid)}>
+                     <MinusIcon width="20px"/>
+                  </button>
+               </div>
+            }
          </div>
       </div>
    )
@@ -64,6 +74,7 @@ const ExerciseControl = (props) => {
          max-height: 100%;
          min-width: 150px;
 
+         color: #323b3b;
          border: 1px solid #9a9a9a;
          border-radius: 4px;
          background: #fefefe;
@@ -104,8 +115,15 @@ const ExerciseControl = (props) => {
             border-top: 1px solid #a9a9a9;
          }
       `}>
-         <button className="remove_exercise" onClick={props.remove}>Remove</button>
-         <button className="complete_exercise" onClick={props.complete}>Complete</button>
+         { 
+            props.completed ? (
+               <button className="remove_exercise" onClick={props.edit}>Edit</button>
+            ):<>
+               <button className="remove_exercise" onClick={props.remove}>Remove</button>
+               <button className="complete_exercise" onClick={props.complete}>Complete</button>
+            </>
+         }
+         
       </div>
    )
 }

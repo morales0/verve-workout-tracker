@@ -11,11 +11,13 @@ import { usePopUp } from '../../hooks/component-hooks'
 // Components
 import { Button, ExerciseBox, Dropdown, Item, ExerciseDropdownItem } from '../../components'
 import { useParams, Link, Redirect } from 'react-router-dom'
+import CreateExerciseWidget from '../../components/Control/CreateExerciseWidget/CreateExerciseWidget'
 
 
 const Workout = (props) => {
    const {wid} = useParams() // Get wid from url
-   const [workout, exerciseTypes, addExercise, completeExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
+   const [workout, exerciseTypes, addExercise, completeExercise, unCompleteExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
+   const [creating, setCreating] = useState(false)
 
    console.log(workout);
 
@@ -25,13 +27,27 @@ const Workout = (props) => {
             flex: 1;
          }
       `}>
+         <div css={`
+            display: ${creating ? 'block' : 'none'};
+            position: absolute;
+            z-index: 200;
+            height: 100vh;
+            width: 100%;
+            padding-top: 20px;
+         `}>
+            <CreateExerciseWidget onSubmit={() => setCreating(false)} css={`
+               margin: auto;
+            `}/>
+
+         </div>
+         
          <Dropdown label="EXERCISES" grow={50} css={`
             position: absolute;
             right: 1.5rem;
             margin-top: .7rem;
             z-index: 90;
          `}>
-            <ExerciseDropdownItem name="Custom" onClick={() => console.log("Custom")} />
+            <ExerciseDropdownItem name="Custom" onClick={() => setCreating(true)} />
             {exerciseTypes.map((type, index) => {
                console.log(type)
                return <ExerciseDropdownItem key={index} name={type.name} 
@@ -53,9 +69,9 @@ const Workout = (props) => {
                   {Object.values(workout.exercises).map((exercise, index) => {
                      return (
                      <ExerciseBox 
-                        key={exercise.eid} exercise={exercise}
+                        key={exercise.eid} wid={wid} exercise={exercise}
                         removeExercise={removeExercise} completeExercise={completeExercise}
-                        addSet={addSet} removeSet={removeSet}
+                        unCompleteExercise={unCompleteExercise} addSet={addSet} removeSet={removeSet}
                         updateSet={updateSet}
                      />
                      )
@@ -79,9 +95,9 @@ const Workout = (props) => {
                   {Object.values(workout.completedExercises).map((exercise, index) => {
                      return (
                      <ExerciseBox 
-                        key={exercise.eid} exercise={exercise}
+                        key={exercise.eid} wid={wid} exercise={exercise}
                         completed={true} removeExercise={removeExercise} completeExercise={completeExercise}
-                        addSet={addSet} removeSet={removeSet}
+                        addSet={addSet} removeSet={removeSet} unCompleteExercise={unCompleteExercise}
                         updateSet={updateSet}
                      />
                      )

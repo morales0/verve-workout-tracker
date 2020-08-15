@@ -36,6 +36,17 @@ const globalReducer = (state, action) => {
          }
       }
 
+      case 'addExerciseType': {
+
+         return {
+            ...state,
+            exerciseTypes: [
+               ...state.exerciseTypes,
+               action.newExerciseType
+            ]
+         }
+      }
+
       case 'updateWorkout': {
          return {
             ...state,

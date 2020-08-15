@@ -3,6 +3,31 @@ import { v4 as uuidv4 } from 'uuid';
 import { useUser } from '../context/user-context'
 import predefinedExercises from '../utils/predefined-exercises';
 
+/**
+ * Gives access to the state for the specific set name
+ */
+const useSetName = (wid, eid, setName, index) => {
+   const {user, dispatch} = useUser()
+   const [value, setValue] = useState(user.workouts[wid].exercises[eid].sets[index][setName])
+
+   useEffect(() => {
+      setValue(user.workouts[wid].exercises[eid].sets[index][setName])
+   }, [user, wid, eid, setName, index])
+
+   // Uses the user dispatch to update the specific set name
+   const updateValue = (newValue) => {
+      const newSetArray = [...user.workouts[wid].exercises[eid].sets]
+      newSetArray[index][setName] = newValue;
+
+      // Dispatch: updateExercise
+      dispatch({type: 'updateExercise', wid: wid, eid: eid, exerciseUpdates: {
+         sets: newSetArray
+      }})
+   }
+
+   return [value, updateValue]
+}
+
 /* Workout hook */
 const useWorkout = (wid) => {
    const {user, dispatch} = useUser()
@@ -48,6 +73,21 @@ const useWorkout = (wid) => {
       const completedExercise = exercises[eid]
       delete exercises[eid]
       completedExercises[eid] = completedExercise
+
+      dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
+         exercises: exercises,
+         completedExercises: completedExercises
+      }})
+   }
+
+   const unCompleteExercise = (eid) => {
+      const exercises = {...workout.exercises}
+      const completedExercises = {...workout.completedExercises}
+
+      // Remove the eid from exercises and save
+      const completedExercise = completedExercises[eid]
+      delete completedExercises[eid]
+      exercises[eid] = completedExercise
 
       dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
          exercises: exercises,
@@ -123,6 +163,7 @@ const useWorkout = (wid) => {
       user.exerciseTypes,
       addExercise,
       completeExercise,
+      unCompleteExercise,
       removeExercise,
       addSet,
       removeSet,
@@ -132,5 +173,6 @@ const useWorkout = (wid) => {
 }
 
 export {
-   useWorkout
+   useWorkout,
+   useSetName
 }

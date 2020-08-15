@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { useNumberInput } from '../../../hooks'
 import { StyledNumberInput } from '../..'
+import { useSetName } from '../../../hooks/user-hooks'
 
 /**
  * Handles a single input value inside a set container.
@@ -13,17 +14,18 @@ import { StyledNumberInput } from '../..'
  * Add increment buttons?
  * 
  */
-const SetNameInput = ({setInitialValue, setName, updateSet}) => {
-   const {value, setValue} = useNumberInput(setInitialValue)
+const SetNameInput = ({wid, eid, setName, index, completed}) => {
+   const [value, updateValue] = useSetName(wid, eid, setName, index)
 
    return (
       <>
          <StyledNumberInput  
             value={value} 
-            onChange={(e) => setValue(e.target.value > 999 ? ~~(e.target.value / 10) : e.target.value)}  
+            disabled={completed}
+            onFocus={(e) => updateValue('')}
+            onChange={(e) => updateValue(e.target.value > 999 ? ~~(e.target.value / 10) : e.target.value)}  
             onBlur={(e) => {
-               console.log(updateSet)
-               updateSet(setName, value)
+               updateValue(e.target.value)
             }}
          />
          <span css={`font-size: .9rem; padding: .3rem;`}>

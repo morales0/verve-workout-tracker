@@ -6,7 +6,7 @@ import DropdownView from '../TestPages/DropdownView'
 import CreateExerciseView from '../TestPages/CreateExerciseView'
 
 const ViewComponents = () => {
-   const [component, setComponent] = useState('Dropdown')
+   const [component, setComponent] = useState('Create Exercise Widget')
 
    return (
       <div className="test_container">
