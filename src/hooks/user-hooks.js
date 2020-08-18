@@ -28,46 +28,12 @@ const useSetName = (wid, eid, setName, index) => {
    return [value, updateValue]
 }
 
-/* Workout hook */
-const useWorkout = (wid) => {
+const useExercise = (wid, eid) => {
    const {user, dispatch} = useUser()
-   const [workout, setWorkout] = useState(user.workouts[wid])
-
-   useEffect(() => {
-      setWorkout(user.workouts[wid])
-   }, [user.workouts, wid])
-
-   // Define workout functions
-   const addExercise = (name, setNames) => {
-      const newUid = uuidv4()
-      const exercises = {...workout.exercises}
-
-      // Find the exercise model, otherwise create a new one
-      /* let newExerciseModel = predefinedExercises[name]
-
-      if (!newExerciseModel) newExerciseModel = {
-         name: name,
-         setNames: ['reps']
-      } */
-
-      // Run update on global user state
-      dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
-         exercises: {
-            [newUid]: {
-               eid: newUid,
-               completed: false,
-               name: name,
-               setNames: setNames,
-               sets: [],
-            },
-            ...exercises,
-         }
-      }})
-   }
-
+   
    const completeExercise = (eid) => {
-      const exercises = {...workout.exercises}
-      const completedExercises = {...workout.completedExercises}
+      const exercises = {...user.workouts[wid].exercises}
+      const completedExercises = {...user.workouts[wid].completedExercises}
 
       // Remove the eid from exercises and save
       const completedExercise = exercises[eid]
@@ -80,7 +46,7 @@ const useWorkout = (wid) => {
       }})
    }
 
-   const unCompleteExercise = (eid) => {
+   const uncompleteExercise = (eid) => {
       const exercises = {...workout.exercises}
       const completedExercises = {...workout.completedExercises}
 
@@ -94,7 +60,7 @@ const useWorkout = (wid) => {
          completedExercises: completedExercises
       }})
    }
-
+   
    const removeExercise = (eid) => {
       const updatedExercises = {...workout.exercises}
       delete updatedExercises[eid]
@@ -133,15 +99,51 @@ const useWorkout = (wid) => {
       }})
    }
 
-   const updateSet = (eid, setIndex) => (setName, newValue) => {
-      console.log(eid, setIndex, newValue)
-      // Create and update the new set
-      const newSetArray = [...workout.exercises[eid].sets]
-      newSetArray[setIndex][setName] = newValue
+   return [
+      user.workouts[wid].exercises[eid],
+      completeExercise,
+      uncompleteExercise,
+      removeExercise,
+      addSet,
+      removeSet
+   ]
+}
 
-      // Dispatch: updateExercise
-      dispatch({type: 'updateExercise', wid: wid, eid: eid, exerciseUpdates: {
-         sets: newSetArray
+/* Workout hook */
+const useWorkout = (wid) => {
+   const {user, dispatch} = useUser()
+   const [workout, setWorkout] = useState(user.workouts[wid])
+
+
+   useEffect(() => {
+      setWorkout(user.workouts[wid])
+   }, [user.workouts, wid])
+
+   // Define workout functions
+   const addExercise = (name, setNames) => {
+      const newUid = uuidv4()
+      const exercises = {...workout.exercises}
+
+      // Find the exercise model, otherwise create a new one
+      /* let newExerciseModel = predefinedExercises[name]
+
+      if (!newExerciseModel) newExerciseModel = {
+         name: name,
+         setNames: ['reps']
+      } */
+
+      // Run update on global user state
+      dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
+         exercises: {
+            [newUid]: {
+               eid: newUid,
+               completed: false,
+               name: name,
+               setNames: setNames,
+               sets: [],
+            },
+            ...exercises,
+         }
       }})
    }
 
@@ -162,17 +164,12 @@ const useWorkout = (wid) => {
       workout,
       user.exerciseTypes,
       addExercise,
-      completeExercise,
-      unCompleteExercise,
-      removeExercise,
-      addSet,
-      removeSet,
-      updateSet, 
       completeWorkout
    ]
 }
 
 export {
    useWorkout,
+   useExercise,
    useSetName
 }

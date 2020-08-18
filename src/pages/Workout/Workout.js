@@ -19,8 +19,6 @@ const Workout = (props) => {
    const [workout, exerciseTypes, addExercise, completeExercise, unCompleteExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
    const [creating, setCreating] = useState(false)
 
-   console.log(workout);
-
    return !workout ? <Redirect to="/" /> : (
       <div className="workout_page" css={`
          &> section:first-of-type {

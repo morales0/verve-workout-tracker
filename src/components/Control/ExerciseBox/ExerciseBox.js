@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react'
 import styled, {ThemeContext} from 'styled-components/macro'
+import { useExercise } from '../../../hooks/user-hooks'
 
 import { ReactComponent as AddSVG } from '../../../images/plus.svg'
 import { ReactComponent as MinusSVG } from '../../../images/minus.svg'
@@ -7,16 +8,20 @@ import { ReactComponent as MoreSVG } from '../../../images/3_dots.svg'
 import { Set } from '../..'
 import { Button } from '../..'
 
-const ExerciseBox = ({wid, exercise, completed, unCompleteExercise, removeExercise, completeExercise, addSet, removeSet, updateSet}) => {
+const ExerciseBox = ({wid, eid, completed}) => {
    const [settings, setSettings] = useState(false)
+   const [exercise, completeExercise, uncompleteExercise, removeExercise, addSet, removeSet] = useExercise(wid, eid);
 
    return (
       <div className="exercise_box_container">
-         {settings && <ExerciseControl 
-            completed={completed}
-            remove={() => removeExercise(exercise.eid)} 
-            complete={() => completeExercise(exercise.eid)}
-            edit={() => unCompleteExercise(exercise.eid)}/>
+         {
+            settings && 
+            <ExerciseControl 
+               completed={completed}
+               remove={() => removeExercise(eid)} 
+               complete={() => completeExercise(eid)}
+               edit={() => uncompleteExercise(eid)}
+            />
          }
          <header className="exercise_box_header">
             <h3>{exercise.name}</h3>
@@ -27,23 +32,25 @@ const ExerciseBox = ({wid, exercise, completed, unCompleteExercise, removeExerci
                </Button>   
             </div>
          </header>
+
          <div className="exercise_box_content" css={`background: ${props => props.theme.themeValue.offBG};`}>
             <div className="sets_container">
-               {exercise.sets.length > 0 ?
-                  exercise.sets.map((set, index) => (
-                     <Set 
-                        key={index} 
-                        wid={wid}
-                        eid={exercise.eid}
-                        setNames={exercise.setNames} 
-                        setIndex={index}
-                        completed={completed}
-                     />
-                  ))
-               :
-                  <h4 css={`font-weight: normal; margin: auto`}>
-                     No sets!
-                  </h4>
+               {
+                  exercise.sets.length > 0 ?
+                     exercise.sets.map((set, index) => (
+                        <Set 
+                           key={index} 
+                           wid={wid}
+                           eid={eid}
+                           setNames={exercise.setNames} 
+                           setIndex={index}
+                           completed={completed}
+                        />
+                     ))
+                  :
+                     <h4 css={`font-weight: normal; margin: auto`}>
+                        No sets!
+                     </h4>
                }
             </div>
             {
