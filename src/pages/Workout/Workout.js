@@ -16,15 +16,12 @@ import CreateExerciseWidget from '../../components/Control/CreateExerciseWidget/
 
 const Workout = (props) => {
    const {wid} = useParams() // Get wid from url
-   const [workout, exerciseTypes, addExercise, completeExercise, unCompleteExercise, removeExercise, addSet, removeSet, updateSet, completeWorkout] = useWorkout(wid)
+   const [workout, meta, exerciseTypes, addExercise, completeWorkout] = useWorkout(wid)
    const [creating, setCreating] = useState(false)
 
    return !workout ? <Redirect to="/" /> : (
-      <div className="workout_page" css={`
-         &> section:first-of-type {
-            flex: 1;
-         }
-      `}>
+      <div className="workout_page">
+         {/* Custom exercise widget */}
          <div css={`
             display: ${creating ? 'block' : 'none'};
             position: absolute;
@@ -39,6 +36,10 @@ const Workout = (props) => {
 
          </div>
          
+         {/** Exercise select
+            TODO: 
+            Remove exercise from dropdown once chosen
+         */}
          <Dropdown label="EXERCISES" grow={50} css={`
             position: absolute;
             right: 1.5rem;
@@ -47,14 +48,14 @@ const Workout = (props) => {
          `}>
             <ExerciseDropdownItem name="Custom" onClick={() => setCreating(true)} />
             {exerciseTypes.map((type, index) => {
-               console.log(type)
                return <ExerciseDropdownItem key={index} name={type.name} 
                         onClick={() => addExercise(type.name, type.setNames)} />
             })}
          </Dropdown>
 
          {
-            Object.keys(workout.completedExercises).length !== 0 && Object.keys(workout.exercises).length === 0 ? null :
+            // Only show if there are exercises available or if the workout is all empty
+            (meta.totalExercises === 0 || meta.uncompletedExercises !== 0) &&
             <section className="exercises_section" >
                <header css={`
                   color: #3c4646;
@@ -65,21 +66,14 @@ const Workout = (props) => {
                </header>
                <div className="exercises">
                   {Object.values(workout.exercises).map((exercise, index) => {
-                     return (
-                     <ExerciseBox 
-                        key={exercise.eid} wid={wid} exercise={exercise}
-                        removeExercise={removeExercise} completeExercise={completeExercise}
-                        unCompleteExercise={unCompleteExercise} addSet={addSet} removeSet={removeSet}
-                        updateSet={updateSet}
-                     />
-                     )
+                     return !exercise.completed && <ExerciseBox key={exercise.eid} wid={wid} exercise={exercise} />
                   })}
                </div>
             </section>
          }
          {
             // Only show the completed section if the user has actually completed exercises
-            Object.keys(workout.completedExercises).length === 0 ? null :
+            meta.completedExercises !== 0 &&
             <section className="exercises_section" >
                <header css={`
                   color: #3c4646;
@@ -90,26 +84,19 @@ const Workout = (props) => {
                </header>
       
                <div className="exercises">
-                  {Object.values(workout.completedExercises).map((exercise, index) => {
-                     return (
-                     <ExerciseBox 
-                        key={exercise.eid} wid={wid} exercise={exercise}
-                        completed={true} removeExercise={removeExercise} completeExercise={completeExercise}
-                        addSet={addSet} removeSet={removeSet} unCompleteExercise={unCompleteExercise}
-                        updateSet={updateSet}
-                     />
-                     )
+                  {Object.values(workout.exercises).map(exercise => {
+                     return exercise.completed && <ExerciseBox key={exercise.eid} wid={wid} exercise={exercise} />
                   })}
                </div>
-
-               
-               
             </section>
          }
          <div className="complete_workout_footer">
             <Link to="/">
-               <Button disabled={Object.keys(workout.exercises).length !== 0 || Object.keys(workout.completedExercises).length === 0}
-                  size="small" bgColor="#a5dca5" onClick={() => completeWorkout()}>
+               <Button disabled={meta.uncompletedExercises !== 0 || meta.totalExercises === 0} 
+                  size="small" 
+                  bgColor="#a5dca5" 
+                  onClick={() => completeWorkout()}
+               >
                   COMPLETE WORKOUT
                </Button>
             </Link>

@@ -6,10 +6,16 @@ div.workout_page {
    height: fit-content;
    font-family: 'Montserrat', sans-serif;
 
+   // Fill the page first
+   > section:first-of-type {
+      flex: 1;
+   } 
+
+   // Allow space for the complete button
    > section:last-child {
       padding-bottom: 2rem;
    }
-
+   
    > div.complete_workout_footer{
       display: flex;
       flex-flow: column;

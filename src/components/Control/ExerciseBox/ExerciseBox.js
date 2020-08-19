@@ -8,7 +8,7 @@ import { ReactComponent as MoreSVG } from '../../../images/3_dots.svg'
 import { Set } from '../..'
 import { Button } from '../..'
 
-const ExerciseBox = ({wid, eid, completed}) => {
+const ExerciseBox = ({wid, eid}) => {
    const [settings, setSettings] = useState(false)
    const [exercise, completeExercise, uncompleteExercise, removeExercise, addSet, removeSet] = useExercise(wid, eid);
 
@@ -17,7 +17,7 @@ const ExerciseBox = ({wid, eid, completed}) => {
          {
             settings && 
             <ExerciseControl 
-               completed={completed}
+               completed={exercise.completed}
                remove={() => removeExercise(eid)} 
                complete={() => completeExercise(eid)}
                edit={() => uncompleteExercise(eid)}
@@ -44,7 +44,7 @@ const ExerciseBox = ({wid, eid, completed}) => {
                            eid={eid}
                            setNames={exercise.setNames} 
                            setIndex={index}
-                           completed={completed}
+                           completed={exercise.completed}
                         />
                      ))
                   :
@@ -54,7 +54,7 @@ const ExerciseBox = ({wid, eid, completed}) => {
                }
             </div>
             {
-               !completed &&
+               !exercise.completed &&
                <div className="sets_control">
                   <button onClick={() => addSet(exercise.eid)}>
                      <PlusIcon width="20px"/>

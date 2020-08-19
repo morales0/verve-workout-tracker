@@ -32,37 +32,19 @@ const useExercise = (wid, eid) => {
    const {user, dispatch} = useUser()
    
    const completeExercise = (eid) => {
-      const exercises = {...user.workouts[wid].exercises}
-      const completedExercises = {...user.workouts[wid].completedExercises}
-
-      // Remove the eid from exercises and save
-      const completedExercise = exercises[eid]
-      delete exercises[eid]
-      completedExercises[eid] = completedExercise
-
-      dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
-         exercises: exercises,
-         completedExercises: completedExercises
+      dispatch({type: 'updateExercise', wid: wid, eid: eid, exerciseUpdates: {
+         completed: true
       }})
    }
 
    const uncompleteExercise = (eid) => {
-      const exercises = {...workout.exercises}
-      const completedExercises = {...workout.completedExercises}
-
-      // Remove the eid from exercises and save
-      const completedExercise = completedExercises[eid]
-      delete completedExercises[eid]
-      exercises[eid] = completedExercise
-
-      dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
-         exercises: exercises,
-         completedExercises: completedExercises
+      dispatch({type: 'updateExercise', wid: wid, eid: eid, exerciseUpdates: {
+         completed: false
       }})
    }
    
    const removeExercise = (eid) => {
-      const updatedExercises = {...workout.exercises}
+      const updatedExercises = {...user.workouts[wid].exercises}
       delete updatedExercises[eid]
 
       dispatch({type: 'updateWorkout', wid: wid, workoutUpdates: {
@@ -71,18 +53,16 @@ const useExercise = (wid, eid) => {
    }
 
    const addSet = (eid) => {
-      console.log('workout', workout.exercises[eid])
-      console.log('eid', eid)
       // First create new set using setnames
       const newSet = {}
-      workout.exercises[eid].setNames.forEach((name) => {
+      user.workouts[wid].exercises[eid].setNames.forEach((name) => {
          newSet[name] = 0;
       })
 
       // Dispatch: updateExercise
       dispatch({type: 'updateExercise', wid: wid, eid: eid, exerciseUpdates: {
          sets: [
-            ...workout.exercises[eid].sets,
+            ...user.workouts[wid].exercises[eid].sets,
             newSet
          ]
       }})
@@ -90,7 +70,7 @@ const useExercise = (wid, eid) => {
 
    const removeSet = (eid) => {
       // Remove last set from set array
-      const newSetArray = [...workout.exercises[eid].sets]
+      const newSetArray = [...user.workouts[wid].exercises[eid].sets]
       newSetArray.pop();
 
       // Dispatch: updateExercise
@@ -113,11 +93,24 @@ const useExercise = (wid, eid) => {
 const useWorkout = (wid) => {
    const {user, dispatch} = useUser()
    const [workout, setWorkout] = useState(user.workouts[wid])
-
+   const [meta, setMeta] = useState({})
 
    useEffect(() => {
       setWorkout(user.workouts[wid])
    }, [user.workouts, wid])
+
+   // Update useful meta data
+   useEffect(() => {
+      setMeta(curr => {
+         return {
+            ...curr,
+            totalExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + 1),
+            completedExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + (ex.completed ? 1 : 0)),
+            uncompletedExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + (ex.completed ? 0 : 1)),
+         }
+      })
+
+   }, [workout.exercises])
 
    // Define workout functions
    const addExercise = (name, setNames) => {
@@ -162,6 +155,7 @@ const useWorkout = (wid) => {
 
    return [
       workout,
+      meta,
       user.exerciseTypes,
       addExercise,
       completeWorkout
