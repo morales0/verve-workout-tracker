@@ -58,6 +58,9 @@ const UserNavIcon = ({name}) => {
          {toggle &&
             <div css={`flex: 1; padding: 1rem 0`}>
                <ThemeToggle />
+               <button>
+                  Sign out
+               </button>
             </div>
          }
       </div>

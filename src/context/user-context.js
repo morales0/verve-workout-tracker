@@ -3,13 +3,13 @@ import { useAuth } from './auth-context'
 
 const UserContext = React.createContext()
 
-const UserProvider = (props) => {
-   const {data: user, dataDispatch: dispatch} = useAuth()
+const UserProvider = ({children, user, authenticated, db}) => {
+   const api = {}
+
+   if (authenticated)
 
    return (
-      <UserContext.Provider value={{user, dispatch}} {...props}>
-         {props.children}
-      </UserContext.Provider>
+      <UserContext.Provider value={{user, authenticated, api}} />
    )
 }
 

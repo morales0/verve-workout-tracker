@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ls from 'local-storage'
+import {UserProvider} from './user-context'
 import { useGlobalState } from '../hooks/useGlobalState'
 
 const newUser ={
@@ -38,8 +39,10 @@ const newUser ={
 
 const AuthContext = React.createContext();
 
-const AuthProvider = (props) => {
+const AuthProvider = ({children, auth, db}) => {
    const [authenticating, setAuthenticating] = useState(true)
+   const [authenticated, setAuthenticated] = useState(false)
+   const [user, setUser] = useState(null)
    const [data, dataDispatch] = useGlobalState()
 
    useEffect(() => {
@@ -47,22 +50,28 @@ const AuthProvider = (props) => {
       ls('userData', data)
    }, [data])
 
-   // Get local storage data for user
-   // Eventually this will get the user details from firebase
-   
-   if(authenticating){
-      const lsData = ls.get('userData')
+   // Subscribe to authentication changes
+   useEffect(() => {
+      auth.onAuthStateChanged(authUser => {
+         console.log("Auth change.", authUser);
 
-      if (lsData) {
-         dataDispatch({type: "SET_DATA", newState: lsData})
-      } else {
-         dataDispatch({type: "SET_DATA", newState: newUser})
-         ls('userData', newUser)
-      }
+         if (authUser) {
+            setUser(authUser)
+            setAuthenticated(true)
+         } else {
+            const lsData = ls.get('userData')
 
-      setAuthenticating(false)
-   }
+            if (lsData) {
+               dataDispatch({type: "SET_DATA", newState: lsData})
+            } else {
+               dataDispatch({type: "SET_DATA", newState: newUser})
+               ls('userData', newUser)
+            }
+         }
 
+         setAuthenticating(false);
+       });
+   })
 
 	// code for pre-loading the user's information if we have their token in
    // localStorage goes here
@@ -79,20 +88,38 @@ const AuthProvider = (props) => {
    }
    
    // Authentication protocols
-	const login = () => {
-      console.log("User requested to login")
+	const login = (email, password) => {
+      auth().signInWithEmailAndPassword(email, password)
+         .catch((error) => {
+            console.log(error.code, error.message)
+       });
    };
-	const register = () => {
-      console.log("User requested to register")
+
+	const register = (email, password) => {
+      auth().createUserWithEmailAndPassword(email, password)
+         .then((user) => {
+            // Create user
+            db.ref('users/' + user.user.uid).set({
+               uid: user.user.uid,
+               email: email,
+            });
+         })
+         .catch((error) => {
+            console.log(error.code, error.message)
+         })
    };
+
 	const logout = () => {
-      console.log("User requested to log out")
-      // clear the token in localStorage and the user data
+      auth.signOut()
    }; 
 
    // Render children when authentication is finished
    return (
-      <AuthContext.Provider value={{data, dataDispatch, login, logout, register}} {...props} />
+      <AuthContext.Provider value={{authenticated, login, logout, register}}>
+         <UserProvider user={user} authenticated={authenticated} db={db}>
+            {children}
+         </UserProvider>
+      </AuthContext.Provider>
    )
 };
 

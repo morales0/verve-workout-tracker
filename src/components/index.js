@@ -18,6 +18,9 @@ import Set from "./Control/Set/Set"
 import SetNameInput from "./Control/SetNameInput/SetNameInput"
 import Navbar from "./Control/Navbar/Navbar"
 import UserNavIcon from "./Control/UserNavIcon/UserNavIcon"
+import UserNavbar from './Control/UserNavbar/UserNavbar'
+import GuestNavbar from './Control/GuestNavbar/GuestNavbar'
+import GuestNavIcon from './Control/GuestNavIcon/GuestNavIcon'
 
 
 
@@ -33,6 +36,9 @@ export {
    Navbar,
    Nav,
    UserNavIcon,
+   UserNavbar,
+   GuestNavIcon,
+   GuestNavbar,
    ThemeToggle,
    StyledNumberInput,
    SetNameInput,

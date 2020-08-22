@@ -8,6 +8,7 @@ import {isMobile} from 'react-device-detect'
 // Hooks & Context
 import { useGlobalState } from './hooks/useGlobalState';
 import { useUser } from './context/user-context';
+import { useAuth } from './context/auth-context'
 
 // Components & Pages
 import { Main, Navbar, Nav, UserNavIcon, Button } from './components'
@@ -17,11 +18,13 @@ import ViewComponents from './pages/ViewComponents/ViewComponents';
 // Other assets
 import verveLogo from './images/verve_fire_logo_1.svg'
 import { lightTheme } from './css/themes'
+import AuthenticatedApp from './AuthenticatedApp'
+import UnauthenticatedApp from './UnauthenticatedApp';
 
 // Main app: routes headers and pages
 const App = () => {
   const [themeValue, setThemeValue] = useState(ls('theme') ? ls('theme') : lightTheme)
-  const {user, dispatch} = useUser()
+  const auth = useAuth()
 
   useEffect(() => {
     ls('theme', themeValue)
@@ -30,88 +33,10 @@ const App = () => {
   return (
     <ThemeProvider theme={{themeValue, setThemeValue}}>
       <>
-      <GlobalStyle />
-      <Router>
-        {/* Route a header depending on path here */}
-        <header>
-          <Switch>
-            <Route path="/login">
-              <h1>Login/Signup Header</h1>
-            </Route>
-
-            <Route path="/signup">
-              <h1>Login/Signup Header</h1>
-            </Route>
-
-            <Route path="/workout/*">
-              <BasicNavbar />
-            </Route>
-
-            <Route path="/gains">
-              <BasicNavbar />
-            </Route>
-
-            <Route path="/viewcomponents">
-              <BasicNavbar />
-            </Route>
-
-            <Route path="/" exact={true}>
-              <BasicNavbar />
-            </Route>
-
-            <Route path="*">
-              <h1>Not found header</h1>
-            </Route>
-          </Switch>
-        </header>
-
-        {/* Route the path's body here */}
-        <Main>
-          <Switch>
-            <Route path="/login">
-              <h1>Login</h1>
-            </Route>
-
-            <Route path="/signup">
-              <h1>Signup</h1>
-            </Route>
-
-            <Route path="/workout/new">
-              {
-                user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutID}`} /> :
-                <CreateWorkout />
-              }
-            </Route>
-
-            <Route path="/workout/:wid">
-              <Workout />
-            </Route>
-
-            <Route path="/workout" exact={true}>
-              {
-                user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutID}`} /> :
-                <Redirect to="/" />
-              }
-            </Route>
-
-            <Route path="/gains">
-              <Gains />
-            </Route>
-
-            <Route path="/viewcomponents">
-              <ViewComponents />
-            </Route>
-            
-            <Route path="/" exact={true}>
-              <Home/>
-            </Route>
-
-            <Route path="*">
-              <h1>Not found</h1>
-            </Route>
-          </Switch>
-        </Main>
-      </Router>
+        <GlobalStyle />
+        auth.authenticated ? 
+          <AuthenticatedApp /> :
+          <UnauthenticatedApp />
       </>
     </ThemeProvider>
   );
