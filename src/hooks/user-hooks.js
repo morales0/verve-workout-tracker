@@ -104,9 +104,9 @@ const useWorkout = (wid) => {
       setMeta(curr => {
          return {
             ...curr,
-            totalExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + 1),
-            completedExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + (ex.completed ? 1 : 0)),
-            uncompletedExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + (ex.completed ? 0 : 1)),
+            totalExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + 1, 0),
+            completedExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + (ex.completed ? 1 : 0), 0),
+            uncompletedExercises: Object.values(workout.exercises).reduce((acc, ex) => acc + (ex.completed ? 0 : 1), 0),
          }
       })
 
