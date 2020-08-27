@@ -1,68 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Verve - a workout logger
+Verve is a webapp for logging your workouts and observing your own trends. Authentication and data is handled by Firebase and the front end is in React.
 
-## Available Scripts
+## Table of Contents
+* [Demo](#demo)
+* [App Story](#app-story)
+* [General info](#general-info)
+* [Tech](#tech)
+* [Download](#download)
 
-In the project directory, you can run:
+## Demo
+THIS APP IS NOT LIVE YET AND STILL IN DEVELOPMENT.
 
-### `npm start`
+### App Story
+In high school, I took a weights class and we had to record all of our workouts on a giant piece of paper. In college, I started recording them in a spreadsheet. Well, today, I refuse to go back. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Origninally I started this app for myself so I could keep a convenient and accessible record of my exercise. However, I realized that there is a lot of room for features in this app! Especially since not many exercise apps appeal to me. So I will try to make this app is big as I can with as many useful features as I can fit. Here are some features I am hoping to implement in the future. 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### Potential future features
+* Visualize specific exercise trends using graphs and tables
+* Create *workout templates* for faster tracking
+* Social network to connect with friends
+* Timers
+* Make into a progressive web app (to function similarly to a native mobile app)
 
-### `npm test`
+### General Info
+You can use verve without an account, however, since it uses your browser's local storage, the data is not guaranteed to persist. It also can't be transferred to other devices. With an email, you can create an account and log in to multiple devices and the data will persist. 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Exercises are defined by their unique name and their list of *set names*. These set names include things like **reps**, **weight**, **time**, etc... Verve lets you create custom exercises using a combination of these set names.
 
-### `npm run build`
+In your workouts, you can add exercises and edit their sets. Once you are finished with a specific exercise, you can move to the completed section by using the more dropdown (three dots) and selecting *complete*. 
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Once you finish the workout (all exercises are in the completed section) you can click on *complete workout* and it will be saved to your "Workout History" page.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Tech
+* React & hooks, Router, styled-components, node-sass
+* Firebase
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Download
+To download, you can clone the repository using 
+`git clone https://github.com/morales0/verve-workout-tracker.git`
 
-### `npm run eject`
+You need npm to run this app locally. Once you do, you can run `npm install` in the project directory to download the necessary dependencies in the package.json file. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Then, you can run `npm start` to host the app at `localhost:3000`
