@@ -1,10 +1,10 @@
 # Verve - a workout logger
 Verve is a webapp for logging your workouts and observing your own trends. Authentication and data is handled by Firebase and the front end is in React.
 ## To Do
-# Readme
+#### Readme
 * Get screenshots for Readme
 * Make Readme more appealing
-# App
+#### App
 * Finish Gains page
 * Finish Workout History page
 * Clean up components
