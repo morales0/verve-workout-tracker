@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react'
+import { useAuth } from '../../../context/auth-context'
 
 import styled from 'styled-components/macro'
 
-import { ThemeToggle } from '../..'
+import { ThemeToggle, Button } from '../..'
 
 const usePopUp = (ref) => {
    const [toggle, setToggle] = useState(false)
@@ -40,6 +41,7 @@ const usePopUp = (ref) => {
 const UserNavIcon = ({name}) => {
    const wrapperRef = useRef(null);
    const [toggle, setToggle] = usePopUp(wrapperRef);
+   const auth = useAuth()
    
    return (
       
@@ -56,11 +58,11 @@ const UserNavIcon = ({name}) => {
       >
          <span css={`padding-bottom: 0`}>{name ? name : "User"}</span>
          {toggle &&
-            <div css={`flex: 1; padding: 1rem 0`}>
+            <div css={`flex: 1; padding: 1rem 0;`}>
                <ThemeToggle />
-               <button>
+               <Button onClick={() => auth.logout()}>
                   Sign out
-               </button>
+               </Button>
             </div>
          }
       </div>

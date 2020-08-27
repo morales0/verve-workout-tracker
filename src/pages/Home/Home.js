@@ -31,7 +31,7 @@ const Home = () => {
             <ToolBox>
                {
                   user.isWorkingOut ?
-                  <ToolBox.Item heading="Continue Workout" href={`/workout/${user.currentWorkoutID}`}>
+                  <ToolBox.Item heading="Continue Workout" href={`/workout/${user.currentWorkoutId}`}>
                      Finish your workout!
                   </ToolBox.Item>
                      :

@@ -3,10 +3,254 @@ import { v4 as uuidv4 } from 'uuid';
 import { useUser } from '../context/user-context'
 import predefinedExercises from '../utils/predefined-exercises';
 
+const useUserData = (authenticated) => {
+   // If user is logged in
+   if (authenticated){
+      
+   } 
+   // If user is in guest mode
+   else {
+      
+   }
+
+   return []
+}
+
+const useWorkout = (wid) => {
+   const userapi = useUser()
+   const [workout, setWorkout] = useState()
+   const [meta, setMeta] = useState({})
+   const [exerciseTypes, setExerciseTypes] = useState([])
+
+   // Subscribe to the user's data
+   useEffect(() => {
+      userapi.subscribe({type: 'workout', wid: wid}, snapshot => {
+         console.log(snapshot, snapshot.val())
+         const workoutSnap = snapshot.val()
+         
+         setWorkout(workoutSnap)
+         setMeta(curr => {
+            return {
+               ...curr,
+               totalExercises: Object.values(workoutSnap.exercises).reduce((acc, ex) => acc + 1, 0),
+               completedExercises: Object.values(workoutSnap.exercises).reduce((acc, ex) => acc + (ex.completed ? 1 : 0), 0),
+               uncompletedExercises: Object.values(workoutSnap.exercises).reduce((acc, ex) => acc + (ex.completed ? 0 : 1), 0),
+            }
+         })
+      })
+
+      // Get exercise types once
+      userapi.get('exerciseTypes', (snapshot => {
+         let arr = []
+
+         snapshot.forEach((type) => {
+            console.log(type.val())
+            arr.push(type.val())
+         })
+
+         setExerciseTypes(arr)
+      }))
+      // Unsubscribe?
+   }, [])
+
+   // Write data when updated
+   useEffect(() => {
+      if (workout) userapi.set({type: 'updateWorkout', wid: wid}, workout)
+   }, [userapi, wid, workout])
+
+   // Functions
+   const completeWorkout = () => {
+      userapi.set({type: 'completeWorkout', wid: wid})
+   }
+   
+   const createCustomExercise = () => {
+   
+   }
+   
+   const addExerciseToWorkout = (name, setNames) => {
+      const newUid = uuidv4()
+
+      setWorkout(curr => {
+         return {
+            ...curr,
+            exercises: {
+               [newUid]: {
+                  eid: newUid,
+                  completed: false,
+                  name: name,
+                  setNames: setNames,
+                  sets: false,
+               },
+               ...curr.exercises
+            }
+         }
+      })
+   }
+   
+   const removeExerciseFromWorkout = (eid) => {
+      setWorkout( curr => {
+         let updatedExercises = curr.exercises
+         delete updatedExercises[eid]
+
+         return {
+            ...curr,
+            exercises: Object.values(updatedExercises).length === 0 ? false : updatedExercises
+         }
+      })
+   }
+   
+   const completeExercise = (eid) => {
+      setWorkout(curr => {
+         return {
+            ...curr,
+            exercises: {
+               ...curr.exercises,
+               [eid]: {
+                  ...curr.exercises[eid],
+                  completed: true
+               }
+            }
+         }
+      })
+   }
+   
+   const uncompleteExercise = (eid) => {
+      setWorkout(curr => {
+         return {
+            ...curr,
+            exercises: {
+               ...curr.exercises,
+               [eid]: {
+                  ...curr.exercises[eid],
+                  completed: false
+               }
+            }
+         }
+      })
+   }
+   
+   const addSetToExercise = (eid) => {
+      setWorkout(curr => {
+         let newSet = {}
+         curr.exercises[eid].setNames.forEach((name) => {
+            newSet[name] = 0;
+         })
+
+         let newSetArray = curr.exercises[eid].sets
+
+         if (newSetArray) {
+            newSetArray.push(newSet)
+         } else {
+            newSetArray = [newSet]
+         }
+
+         return {
+            ...curr,
+            exercises: {
+               ...curr.exercises,
+               [eid]: {
+                  ...curr.exercises[eid],
+                  sets: newSetArray
+               }
+            }
+         }
+      })
+   }
+
+   const removeSetFromExercise = (eid) => {
+      setWorkout(curr => {
+         let newSetArray = curr.exercises[eid].sets
+
+         if (!newSetArray) return curr
+
+         if (newSetArray.length === 1) {
+            newSetArray = false;
+         } else {
+            newSetArray.pop()
+         }
+
+         return {
+            ...curr,
+            exercises: {
+               ...curr.exercises,
+               [eid]: {
+                  ...curr.exercises[eid],
+                  sets: newSetArray
+               }
+            }
+         }
+      })
+   }
+   
+   const updateSetName = eid => (setIndex, setName) => value => {
+      setWorkout(curr => {
+         let setArr = curr.exercises[eid].sets
+         setArr[setIndex][setName] = value
+
+         return {
+            ...curr,
+            exercises: {
+               ...curr.exercises,
+               [eid]: {
+                  ...curr.exercises[eid],
+                  sets: setArr
+               }
+            }
+         }
+      })
+   }
+
+   // Return hooks
+   return [
+      workout, 
+      meta,
+      exerciseTypes,
+      {
+         addExerciseToWorkout,
+         completeWorkout,
+         exerciseapi: {
+            removeExerciseFromWorkout,
+            uncompleteExercise,
+            completeExercise,
+            addSetToExercise,
+            removeSetFromExercise,
+            updateSetName
+         }
+      }
+   ]
+}
+
+const useSetName = (wid, eid, setIndex, setName) => {
+   // Access to user context
+   const userapi = useUser()
+   // Set up local state
+   const [value, setValue] = useState('');
+
+   // Subscribe to the user's data
+   useEffect(() => {
+      userapi.subscribe({type: 'setName', wid: wid, eid: eid, setIndex: setIndex, setName: setName}, snapshot => {
+         setValue(snapshot.val())
+      })
+
+      // Unsubscribe?
+   }, [])
+
+   // Write data when updated
+   useEffect(() => {
+      userapi.set({type: 'setName', wid: wid, eid: eid, setIndex: setIndex, setName: setName}, value)
+   }, [value])
+
+   // Return hooks
+   return [value, setValue]
+}
+
+
+
+/********* OLD HOOKS *********/
 /**
  * Gives access to the state for the specific set name
  */
-const useSetName = (wid, eid, setName, index) => {
+const useSetNameOLD = (wid, eid, setName, index) => {
    const {user, dispatch} = useUser()
    const [value, setValue] = useState(user.workouts[wid].exercises[eid].sets[index][setName])
 
@@ -89,8 +333,7 @@ const useExercise = (wid, eid) => {
    ]
 }
 
-/* Workout hook */
-const useWorkout = (wid) => {
+const useWorkout2 = (wid) => {
    const {user, dispatch} = useUser()
    const [workout, setWorkout] = useState(user.workouts[wid])
    const [meta, setMeta] = useState({})

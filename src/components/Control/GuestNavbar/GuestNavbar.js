@@ -1,5 +1,5 @@
 import React from 'react';
-import verveLogo from './images/verve_fire_logo_1.svg'
+import verveLogo from '../../../images/verve_fire_logo_1.svg'
 import { Navbar, Nav, GuestNavIcon } from '../..';
 
 const GuestNavbar = (props) => {

@@ -26,6 +26,14 @@ div.workout_page {
          margin: auto;
       }
    }
+
+   // The exercise dropdown
+   .workout_exercises_dropdown {
+      position: absolute;
+      right: 1.5rem;
+      margin-top: .7rem;
+      z-index: 90;
+   }
 }
 
 section.exercises_section {
@@ -40,13 +48,16 @@ section.exercises_section {
       justify-content: space-between;
       align-items: center;
       padding: .25rem 1rem;
+      border-bottom: 1px solid #b3b3b3;
       font-size: 1.25rem;
       font-family: 'Arimo', sans-serif;
       -webkit-backdrop-filter: blur(7px);
       backdrop-filter: blur(7px);
 
       > h1 {
+         color: #3c4646;
          margin: 1rem 0;
+         font-variant: petite-caps;
       }
    }
 
@@ -77,33 +88,30 @@ div.exercise_box_container {
    /* border: 1px solid #828282; */
    border-radius: 5px;
    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-}
 
-header.exercise_box_header {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: .5rem .3rem .5rem 1rem;
-   background: rgb(215, 246, 255);
-   border-bottom: 1px solid #353535d9;
-
-   h3 {
+   > header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .5rem .3rem .5rem 1rem;
       color: #323232;
-      margin: 0;
-   }
+      background: rgb(215, 246, 255);
+      border-bottom: 1px solid #353535d9;
 
-   button.more_toggle {
-      padding: 2px .25rem 0 .25rem;
-      margin-left: 5px;
-      border: none;
-      outline: none;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      transition: .5s;
+      h3 {
+         color: #323232;
+         margin: 0;
+      }
 
-      &:hover {
-
+      button.more_toggle {
+         padding: 2px .25rem 0 .25rem;
+         margin-left: 5px;
+         border: none;
+         outline: none;
+         background: transparent;
+         border: none;
+         box-shadow: none;
+         transition: .5s;
       }
    }
 }

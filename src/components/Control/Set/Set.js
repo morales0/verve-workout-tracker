@@ -2,14 +2,18 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { SetNameInput } from '../..'
 
-const Set = ({wid, eid, setIndex, setNames, completed}) => {
+const Set = ({completed, setNames, setIndex, set, updateSetName}) => {
    return (
       <div className="set">
          {setNames.map((setName, index) => {
             return (
                <React.Fragment key={index}>
                   { index !== 0 && <SetSeparator/> }
-                  <SetNameInput wid={wid} eid={eid} setName={setName} index={setIndex} completed={completed}/>
+                  <SetNameInput completed={completed} 
+                     setName={setName} 
+                     value={set[setName]} 
+                     updateSetName={updateSetName(setIndex, setName)}
+                  />
                </React.Fragment>
             )
          })}

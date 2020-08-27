@@ -3,39 +3,7 @@ import ls from 'local-storage'
 import {UserProvider} from './user-context'
 import { useGlobalState } from '../hooks/useGlobalState'
 
-const newUser ={
-   name: 'Verver',
-   displayName: 'V',
-   isWorkingOut: false,
-   currentWorkoutID: null,
-   exerciseTypes: [
-      {
-         name: 'Pushups',
-         setNames: ['reps']
-      },
-      {
-         name: 'Pullups',
-         setNames: ['reps']
-      },
-      {
-         name: 'Bench Press',
-         setNames: ['weight', 'reps']
-      },
-      {
-         name: 'Shoulder Press',
-         setNames: ['weight', 'reps']
-      },
-      {
-         name: 'Body Squats',
-         setNames: ['reps'],
-      },
-      {
-         name: 'Dumbell Squats',
-         setNames: ['weight', 'reps']
-      }
-   ],
-   workouts: {}
-}
+
 
 const AuthContext = React.createContext();
 
@@ -43,15 +11,10 @@ const AuthProvider = ({children, auth, db}) => {
    const [authenticating, setAuthenticating] = useState(true)
    const [authenticated, setAuthenticated] = useState(false)
    const [user, setUser] = useState(null)
-   const [data, dataDispatch] = useGlobalState()
-
-   useEffect(() => {
-      console.log('Render')
-      ls('userData', data)
-   }, [data])
 
    // Subscribe to authentication changes
    useEffect(() => {
+      console.log('render app')
       auth.onAuthStateChanged(authUser => {
          console.log("Auth change.", authUser);
 
@@ -59,19 +22,16 @@ const AuthProvider = ({children, auth, db}) => {
             setUser(authUser)
             setAuthenticated(true)
          } else {
-            const lsData = ls.get('userData')
+            setUser({
+               name: 'Verver',
+            })
 
-            if (lsData) {
-               dataDispatch({type: "SET_DATA", newState: lsData})
-            } else {
-               dataDispatch({type: "SET_DATA", newState: newUser})
-               ls('userData', newUser)
-            }
+            setAuthenticated(false)
          }
 
          setAuthenticating(false);
        });
-   })
+   }, [])
 
 	// code for pre-loading the user's information if we have their token in
    // localStorage goes here
@@ -89,14 +49,14 @@ const AuthProvider = ({children, auth, db}) => {
    
    // Authentication protocols
 	const login = (email, password) => {
-      auth().signInWithEmailAndPassword(email, password)
+      auth.signInWithEmailAndPassword(email, password)
          .catch((error) => {
             console.log(error.code, error.message)
        });
    };
 
 	const register = (email, password) => {
-      auth().createUserWithEmailAndPassword(email, password)
+      auth.createUserWithEmailAndPassword(email, password)
          .then((user) => {
             // Create user
             db.ref('users/' + user.user.uid).set({
@@ -110,13 +70,14 @@ const AuthProvider = ({children, auth, db}) => {
    };
 
 	const logout = () => {
+      console.log('Sign out')
       auth.signOut()
    }; 
 
    // Render children when authentication is finished
    return (
       <AuthContext.Provider value={{authenticated, login, logout, register}}>
-         <UserProvider user={user} authenticated={authenticated} db={db}>
+         <UserProvider userAuth={user} authenticated={authenticated} db={db}>
             {children}
          </UserProvider>
       </AuthContext.Provider>

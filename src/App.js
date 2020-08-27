@@ -34,9 +34,10 @@ const App = () => {
     <ThemeProvider theme={{themeValue, setThemeValue}}>
       <>
         <GlobalStyle />
-        auth.authenticated ? 
+        {auth.authenticated ? 
           <AuthenticatedApp /> :
           <UnauthenticatedApp />
+        }
       </>
     </ThemeProvider>
   );

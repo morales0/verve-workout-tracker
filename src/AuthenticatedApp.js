@@ -8,7 +8,7 @@ import { Home, Workout, Gains, ViewComponents } from './pages';
 import { useUser } from './context/user-context';
 
 const AuthenticatedApp = () => {
-  const {user, authenticated, api} = useUser()
+	const { user, authenticated, subscribe, set } = useUser();
 
 	return (
 		<Router>
@@ -16,19 +16,19 @@ const AuthenticatedApp = () => {
 			<header>
 				<Switch>
 					<Route path="/workout/*">
-						<UserNavbar />
+						<UserNavbar user={user} />
 					</Route>
 
 					<Route path="/gains">
-						<UserNavbar />
+						<UserNavbar user={user} />
 					</Route>
 
 					<Route path="/viewcomponents">
-						<UserNavbar />
+						<UserNavbar user={user} />
 					</Route>
 
 					<Route path="/" exact={true}>
-						<UserNavbar />
+						<UserNavbar user={user} />
 					</Route>
 
 					<Route path="*">
@@ -50,12 +50,12 @@ const AuthenticatedApp = () => {
 					</Route>
 
 					{/* Handle user pages */}
-          <Route path="/" exact={true}>
+					<Route path="/" exact={true}>
 						<Home />
 					</Route>
 
 					<Route path="/workout/new">
-						{user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutID}`} /> : <CreateWorkout />}
+						{user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutId}`} /> : <CreateWorkout />}
 					</Route>
 
 					<Route path="/workout/:wid">
@@ -63,7 +63,7 @@ const AuthenticatedApp = () => {
 					</Route>
 
 					<Route path="/workout" exact={true}>
-						{user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutID}`} /> : <Redirect to="/" />}
+						{user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutId}`} /> : <Redirect to="/" />}
 					</Route>
 
 					<Route path="/gains">
@@ -74,7 +74,7 @@ const AuthenticatedApp = () => {
 						<ViewComponents />
 					</Route>
 
-          {/* Catch all */}
+					{/* Catch all */}
 					<Route path="*">
 						<h1>Not found</h1>
 					</Route>
@@ -85,29 +85,30 @@ const AuthenticatedApp = () => {
 };
 
 // Create a new workout and redirect
-const CreateWorkout = (props) =>{
-  const [newID, setNewID] = useState(null)
-  const {user, dispatch} = useUser()
+const CreateWorkout = (props) => {
+	const [ newID, setNewID ] = useState(null);
+	const userapi = useUser();
 
-  useEffect(() => {
-    const wid = uuidv4()
-    dispatch({type: 'createNewWorkout', wid: wid})
-    console.log("After dispatch")
+	useEffect(() => {
+      const wid = userapi.set({type: 'createWorkout'})
+      setTimeout(() => setNewID(wid), 1000);
+   }, []);
 
-    setTimeout(() => setNewID(wid), 1000)
-  }, [dispatch])
-
-  return newID ? <Redirect to={`/workout/${newID}`}/> : (
-    <div css={`
+	return newID ? (
+		<Redirect to={`/workout/${newID}`} />
+	) : (
+		<div
+			css={`
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100%;
       width: 100%;
-    `}>
-      Creating workout
-    </div>
-  )
-}
+    `}
+		>
+			Creating workout
+		</div>
+	);
+};
 
 export default AuthenticatedApp;

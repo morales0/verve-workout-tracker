@@ -8,9 +8,8 @@ import { ReactComponent as MoreSVG } from '../../../images/3_dots.svg'
 import { Set } from '../..'
 import { Button } from '../..'
 
-const ExerciseBox = ({wid, eid}) => {
+const ExerciseBox = ({completed, exercise, exerciseapi}) => {
    const [settings, setSettings] = useState(false)
-   const [exercise, completeExercise, uncompleteExercise, removeExercise, addSet, removeSet] = useExercise(wid, eid);
 
    return (
       <div className="exercise_box_container">
@@ -18,15 +17,16 @@ const ExerciseBox = ({wid, eid}) => {
             settings && 
             <ExerciseControl 
                completed={exercise.completed}
-               remove={() => removeExercise(eid)} 
-               complete={() => completeExercise(eid)}
-               edit={() => uncompleteExercise(eid)}
+               remove={() => exerciseapi.removeExerciseFromWorkout(exercise.eid)} 
+               complete={() => exerciseapi.completeExercise(exercise.eid)}
+               edit={() => exerciseapi.uncompleteExercise(exercise.eid)}
             />
          }
-         <header className="exercise_box_header">
+
+         <header>
             <h3>{exercise.name}</h3>
             <div>
-               <span>{exercise.sets.length}</span>
+               <span>{exercise.sets ? exercise.sets.length : 0}</span>
                <Button className="more_toggle" onClick={() => setSettings(!settings)}>
                   <MoreIcon width="25px"/>
                </Button>   
@@ -36,15 +36,14 @@ const ExerciseBox = ({wid, eid}) => {
          <div className="exercise_box_content" css={`background: ${props => props.theme.themeValue.offBG};`}>
             <div className="sets_container">
                {
-                  exercise.sets.length > 0 ?
+                  (exercise.sets && exercise.sets.length > 0) ?
                      exercise.sets.map((set, index) => (
-                        <Set 
+                        <Set completed={completed}
                            key={index} 
-                           wid={wid}
-                           eid={eid}
-                           setNames={exercise.setNames} 
+                           setNames={exercise.setNames}
                            setIndex={index}
-                           completed={exercise.completed}
+                           set={set}
+                           updateSetName={exerciseapi.updateSetName(exercise.eid)}
                         />
                      ))
                   :
@@ -56,10 +55,10 @@ const ExerciseBox = ({wid, eid}) => {
             {
                !exercise.completed &&
                <div className="sets_control">
-                  <button onClick={() => addSet(exercise.eid)}>
+                  <button onClick={() => exerciseapi.addSetToExercise(exercise.eid)}>
                      <PlusIcon width="20px"/>
                   </button>
-                  <button onClick={() => removeSet(exercise.eid)}>
+                  <button onClick={() => exerciseapi.removeSetFromExercise(exercise.eid)}>
                      <MinusIcon width="20px"/>
                   </button>
                </div>

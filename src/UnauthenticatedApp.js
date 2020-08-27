@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid';
+
+import { useUser } from './context/user-context';
 
 // Components
-import { Main } from './components'
+import { Main, GuestNavbar } from './components'
 
 // Pages
-import { Workout } from './pages'
+import { Home, Workout, Gains, ViewComponents } from './pages';
 
 
 // This app will use local storage for data
 const UnauthenticatedApp = () => {
+  const {user, authenticated, api} = useUser()
+
    return (
       <Router>
         {/* Route a header depending on path here */}
@@ -24,19 +29,19 @@ const UnauthenticatedApp = () => {
             </Route>
 
             <Route path="/workout/*">
-              <BasicNavbar />
+              <GuestNavbar />
             </Route>
 
             <Route path="/gains">
-              <BasicNavbar />
+              <GuestNavbar />
             </Route>
 
             <Route path="/viewcomponents">
-              <BasicNavbar />
+              <GuestNavbar />
             </Route>
 
             <Route path="/" exact={true}>
-              <BasicNavbar />
+              <GuestNavbar />
             </Route>
 
             <Route path="*">
@@ -93,6 +98,31 @@ const UnauthenticatedApp = () => {
         </Main>
       </Router>
    )
+}
+
+// Create a new workout and redirect
+const CreateWorkout = (props) =>{
+  const [newID, setNewID] = useState(null)
+  const userapi = useUser()
+
+  useEffect(() => {
+    const wid = uuidv4()
+    userapi.set({type: 'createWorkout', wid: wid})
+
+    setTimeout(() => setNewID(wid), 1000)
+  }, [])
+
+  return newID ? <Redirect to={`/workout/${newID}`}/> : (
+    <div css={`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+    `}>
+      Creating workout
+    </div>
+  )
 }
 
 export default UnauthenticatedApp
