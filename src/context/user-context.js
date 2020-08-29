@@ -63,7 +63,6 @@ const UserProvider = ({children, userAuth, authenticated, db}) => {
    // Update external user data when state is updated
    useEffect(() => {
       if(authenticated) {
-         console.log('update firebase')
       } else {
          ls('userData', user)
       }
@@ -80,6 +79,12 @@ const UserProvider = ({children, userAuth, authenticated, db}) => {
                break
             case 'workout':
                db.ref(`users/${user.uid}/workouts/${action.wid}`)
+                  .on('value', snapshot => {
+                     callback(snapshot)
+                  })
+               break
+            case 'exerciseTypes':
+               db.ref(`users/${user.uid}/exerciseTypes`)
                   .on('value', snapshot => {
                      callback(snapshot)
                   })
@@ -128,7 +133,7 @@ const UserProvider = ({children, userAuth, authenticated, db}) => {
                let newWorkout = {
                   wid: workoutKey,
                   completed: false,
-                  dateStarted: now.toISOString(),
+                  dateStartedString: now.toDateString(),
                   timeStarted: now.getTime(),
                   timeEnded: null,
                   exercises: false,
@@ -152,6 +157,14 @@ const UserProvider = ({children, userAuth, authenticated, db}) => {
             case 'completeWorkout':
                db.ref(`users/${user.uid}/workouts/${action.wid}`).update({completed: true})
                db.ref(`users/${user.uid}`).update({currentWorkoutId: false, isWorkingOut: false})
+               break
+            case 'createCustomExercise':
+               db.ref(`users/${user.uid}/exerciseTypes`).update({
+                  [action.name]: {
+                     name: action.name,
+                     setNames: action.setNames
+                  }
+               })
                break
             default: break
          }

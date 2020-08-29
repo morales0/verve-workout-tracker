@@ -39,7 +39,7 @@ const Home = () => {
                      Start a new workout here
                   </ToolBox.Item>
                }
-               <ToolBox.Item heading="Gains" href="/gains">Analyze your amazing gains!</ToolBox.Item>
+               <ToolBox.Item heading="Workout History" href="/workouthistory">View your past workouts!</ToolBox.Item>
                <ToolBox.Item heading="Exercises" href="/">See your collection of exercises and update them</ToolBox.Item>
             </ToolBox>
          </div>

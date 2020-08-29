@@ -6,6 +6,7 @@ import { UserNavbar, Main } from './components';
 // Pages
 import { Home, Workout, Gains, ViewComponents } from './pages';
 import { useUser } from './context/user-context';
+import WorkoutHistory from './pages/WorkoutHistory/WorkoutHistory';
 
 const AuthenticatedApp = () => {
 	const { user, authenticated, subscribe, set } = useUser();
@@ -15,6 +16,10 @@ const AuthenticatedApp = () => {
 			{/* Route a header depending on path here */}
 			<header>
 				<Switch>
+					<Route path="/workouthistory">
+						<UserNavbar user={user} />
+					</Route>
+					
 					<Route path="/workout/*">
 						<UserNavbar user={user} />
 					</Route>
@@ -54,6 +59,10 @@ const AuthenticatedApp = () => {
 						<Home />
 					</Route>
 
+					<Route path="/workouthistory">
+						<WorkoutHistory />
+					</Route>
+
 					<Route path="/workout/new">
 						{user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutId}`} /> : <CreateWorkout />}
 					</Route>
@@ -64,10 +73,6 @@ const AuthenticatedApp = () => {
 
 					<Route path="/workout" exact={true}>
 						{user.isWorkingOut ? <Redirect to={`/workout/${user.currentWorkoutId}`} /> : <Redirect to="/" />}
-					</Route>
-
-					<Route path="/gains">
-						<Gains />
 					</Route>
 
 					<Route path="/viewcomponents">

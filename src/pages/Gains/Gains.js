@@ -1,6 +1,5 @@
 import React from 'react'
 
-import './Gains.scss'
 import { useUser } from '../../context/user-context'
 import { Link } from 'react-router-dom';
 

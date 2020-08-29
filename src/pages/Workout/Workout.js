@@ -22,7 +22,7 @@ const Workout = (props) => {
    return !workout ? <div>Setting up</div> : (
       <div className="workout_page">
          {/* Custom exercise widget */}
-         {/* <div css={`
+         <div css={`
             display: ${creating ? 'block' : 'none'};
             position: absolute;
             z-index: 200;
@@ -30,23 +30,27 @@ const Workout = (props) => {
             width: 100%;
             padding-top: 20px;
          `}>
-            <CreateExerciseWidget onSubmit={() => setCreating(false)} css={`
+            <CreateExerciseWidget customCallback={workoutapi.createCustomExercise} onSubmit={() => setCreating(false)} css={`
                margin: auto;
             `}/>
 
-         </div> */}
+         </div>
          
          {/** Exercise select
             TODO: 
             Remove exercise from dropdown once chosen
          */}
-         <Dropdown label="EXERCISES" grow={50} className="workout_exercises_dropdown">
-            {/* <ExerciseDropdownItem name="Custom" onClick={() => setCreating(true)} /> */}
-            {exerciseTypes.map((type) => {
-               return <ExerciseDropdownItem key={type.name} name={type.name} 
-                        onClick={() => workoutapi.addExerciseToWorkout(type.name, type.setNames)} />
-            })}
-         </Dropdown>
+         {
+            // Only show this button if workout is in progress
+            !workout.completed &&
+            <Dropdown label="EXERCISES" grow={50} className="workout_exercises_dropdown">
+               <ExerciseDropdownItem name="Custom" onClick={() => setCreating(true)} />
+               {exerciseTypes.map((type) => {
+                  return <ExerciseDropdownItem key={type.name} name={type.name} 
+                           onClick={() => workoutapi.addExerciseToWorkout(type.name, type.setNames)} />
+               })}
+            </Dropdown>
+         }
 
          {
             // Only show if there are exercises available or if the workout is all empty
@@ -56,12 +60,11 @@ const Workout = (props) => {
                   <h1>Workout</h1>
                </header>
                <div className="exercises">
-                  {Object.values(workout.exercises).map((exercise, index) => {
-                     console.log("set names", exerciseTypes)
-                     
+                  {Object.values(workout.exercises).map((exercise, index) => {  
                      return !exercise.completed && 
                         <ExerciseBox 
                            key={exercise.eid} 
+                           control={!workout.completed}
                            exercise={exercise} 
                            exerciseapi={workoutapi.exerciseapi}
                         />
@@ -90,7 +93,10 @@ const Workout = (props) => {
             </section>
          }
 
-         <div className="complete_workout_footer">
+         {
+            // Only show this button if workout is in progress
+            !workout.completed &&
+            <div className="complete_workout_footer">
             <Link to="/">
                <Button disabled={meta.uncompletedExercises !== 0 || meta.totalExercises === 0} 
                   size="small" 
@@ -101,6 +107,8 @@ const Workout = (props) => {
                </Button>
             </Link>
          </div>
+         }
+         
       </div>
    )
 }

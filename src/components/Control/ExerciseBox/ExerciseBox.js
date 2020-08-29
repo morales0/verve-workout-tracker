@@ -8,7 +8,7 @@ import { ReactComponent as MoreSVG } from '../../../images/3_dots.svg'
 import { Set } from '../..'
 import { Button } from '../..'
 
-const ExerciseBox = ({completed, exercise, exerciseapi}) => {
+const ExerciseBox = ({control, completed, exercise, exerciseapi}) => {
    const [settings, setSettings] = useState(false)
 
    return (
@@ -26,10 +26,14 @@ const ExerciseBox = ({completed, exercise, exerciseapi}) => {
          <header>
             <h3>{exercise.name}</h3>
             <div>
-               <span>{exercise.sets ? exercise.sets.length : 0}</span>
-               <Button className="more_toggle" onClick={() => setSettings(!settings)}>
-                  <MoreIcon width="25px"/>
-               </Button>   
+               <span className="set_count">{exercise.sets ? exercise.sets.length : 0}</span>
+               {
+                  control &&
+                  <Button className="more_toggle" onClick={() => setSettings(!settings)}>
+                     <MoreIcon width="25px"/>
+                  </Button>
+               }
+                  
             </div>
          </header>
 

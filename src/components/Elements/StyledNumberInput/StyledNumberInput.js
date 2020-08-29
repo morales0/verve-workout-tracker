@@ -15,6 +15,10 @@ const StyledNumberInput = styled.input.attrs(props => ({
    font-family: inherit;
    font-size: 1.35rem;
 
+   /* Disable light coloring in iphone */
+   -webkit-text-fill-color: #303030ff;
+   opacity: 1;
+
    &:focus{
       outline: 2px solid #aaa;
       outline-style: auto;

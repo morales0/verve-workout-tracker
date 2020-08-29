@@ -25,7 +25,6 @@ const useWorkout = (wid) => {
    // Subscribe to the user's data
    useEffect(() => {
       userapi.subscribe({type: 'workout', wid: wid}, snapshot => {
-         console.log(snapshot, snapshot.val())
          const workoutSnap = snapshot.val()
          
          setWorkout(workoutSnap)
@@ -40,16 +39,15 @@ const useWorkout = (wid) => {
       })
 
       // Get exercise types once
-      userapi.get('exerciseTypes', (snapshot => {
+      userapi.subscribe({type: 'exerciseTypes'}, snapshot => {
          let arr = []
 
          snapshot.forEach((type) => {
-            console.log(type.val())
             arr.push(type.val())
          })
 
          setExerciseTypes(arr)
-      }))
+      })
       // Unsubscribe?
    }, [])
 
@@ -63,8 +61,8 @@ const useWorkout = (wid) => {
       userapi.set({type: 'completeWorkout', wid: wid})
    }
    
-   const createCustomExercise = () => {
-   
+   const createCustomExercise = (name, setNames) => {
+      userapi.set({type: 'createCustomExercise', name: name, setNames: setNames})
    }
    
    const addExerciseToWorkout = (name, setNames) => {
@@ -208,6 +206,7 @@ const useWorkout = (wid) => {
       {
          addExerciseToWorkout,
          completeWorkout,
+         createCustomExercise,
          exerciseapi: {
             removeExerciseFromWorkout,
             uncompleteExercise,

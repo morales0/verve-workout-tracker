@@ -29,11 +29,7 @@ const CreateExerciseWidget = (props) => {
 
    const submit = () => {
       if (verify()) {
-         console.log('add exercise')
-         dispatch({type: 'addExerciseType', newExerciseType: {
-            name: name,
-            setNames: setNames
-         }})
+         props.customCallback(name, setNames)
       } else {
          console.log('no')
       }
@@ -54,7 +50,7 @@ const CreateExerciseWidget = (props) => {
             display: flex;
             flex-direction: column;
          `}>
-            <label for="name">Name</label>
+            <label htmlFor="name">Name</label>
             <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} css={`
                padding: 5px;
                outline: none;
@@ -79,15 +75,15 @@ const CreateExerciseWidget = (props) => {
          `}>
             <div>
                <input type="checkbox" id="reps" onChange={(e) => updateSetNames(e, 'reps')}/>
-               <label for="reps">Reps</label>
+               <label htmlFor="reps">Reps</label>
             </div>
             <div>
                <input type="checkbox" id="weight" onChange={(e) => updateSetNames(e, 'weight')}/>
-               <label for="weight">Weight</label>
+               <label htmlFor="weight">Weight</label>
             </div>
             <div>
                <input type="checkbox" id="time" onChange={(e) => updateSetNames(e, 'time')}/>
-               <label for="time">Time</label>
+               <label htmlFor="time">Time</label>
             </div>
          </div>
          <div css={`
