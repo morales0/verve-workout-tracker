@@ -58,7 +58,14 @@ const UserNavIcon = ({name}) => {
       >
          <span css={`padding-bottom: 0`}>{name ? name : "User"}</span>
          {toggle &&
-            <div css={`flex: 1; padding: 1rem 0;`}>
+            <div css={`
+               flex: 1; 
+               padding: 1rem 0;
+
+               & > button {
+                  margin: 5px;
+               }
+            `}>
                <ThemeToggle />
                <Button onClick={() => auth.logout()}>
                   Sign out

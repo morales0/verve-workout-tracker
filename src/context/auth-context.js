@@ -55,13 +55,45 @@ const AuthProvider = ({children, auth, db}) => {
        });
    };
 
-	const register = (email, password) => {
+	const register = (email, password, initials, name) => {
       auth.createUserWithEmailAndPassword(email, password)
          .then((user) => {
             // Create user
-            db.ref('users/' + user.user.uid).set({
+            console.log(user)
+
+            db.ref(`users/${user.user.uid}`).set({
                uid: user.user.uid,
                email: email,
+               initials: initials,
+               name: name,
+               currentWorkoutId: false,
+               isWorkingOut: false,
+               exerciseTypes: [
+                  {
+                     name: 'Pushups',
+                     setNames: ['reps']
+                  },
+                  {
+                     name: 'Pullups',
+                     setNames: ['reps']
+                  },
+                  {
+                     name: 'Bench Press',
+                     setNames: ['weight', 'reps']
+                  },
+                  {
+                     name: 'Shoulder Press',
+                     setNames: ['weight', 'reps']
+                  },
+                  {
+                     name: 'Body Squats',
+                     setNames: ['reps'],
+                  },
+                  {
+                     name: 'Dumbell Squats',
+                     setNames: ['weight', 'reps']
+                  }
+               ]
             });
          })
          .catch((error) => {

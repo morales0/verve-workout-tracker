@@ -12,7 +12,13 @@ const UserNavbar = (props) => {
           <img src={verveLogo} alt="React Logo" width="45px"/>
         </Link>
         <Nav justify={"right"}>
-          <a href="/viewcomponents">Test Components</a>
+          {
+            props.user.isWorkingOut ?
+            <Link to={`/workout/${props.user.currentWorkoutId}`}>Current Workout</Link>
+            :
+            <Link to="/workout/new">New Workout</Link>
+          }
+          <Link to="/workouthistory">Workout History</Link>
         </Nav>
         <UserNavIcon name={props.user.initials ? props.user.initials : "V"}/>
       </Navbar>

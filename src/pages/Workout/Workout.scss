@@ -26,14 +26,14 @@ div.workout_page {
          margin: auto;
       }
    }
+}
 
-   // The exercise dropdown
-   .workout_exercises_dropdown {
-      position: absolute;
-      right: 1.5rem;
-      margin-top: .7rem;
-      z-index: 90;
-   }
+// The exercise dropdown
+.workout_exercises_dropdown {
+   position: absolute;
+   right: 1.5rem;
+   margin-top: .7rem;
+   z-index: 90;
 }
 
 section.exercises_section {

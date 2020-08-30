@@ -12,7 +12,7 @@ const WorkoutHistory = () => {
          <header>
             <h2>My Workouts</h2>
          </header>
-         <hr className="divider"/> 
+         <hr className="divider"/>
          <div className="workouts_container">
             {Object.values(user.workouts).map((workout, index) => {
                return <PastWorkoutTile key={index} wid={workout.wid} date={workout.dateStartedString} exercises={workout.exercises}/>

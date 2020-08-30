@@ -10,6 +10,7 @@ const GuestNavIcon = (props) => {
    const wrapperRef = useRef(null);
    const [toggle, setToggle] = usePopUp(wrapperRef);
    const [showLogIn, setShowLogIn] = useState(false)
+   const [showRegister, setShowRegister] = useState(false)
    
    return (
       <>
@@ -28,6 +29,23 @@ const GuestNavIcon = (props) => {
       `}>
          <LogInWidget />
       </div>
+
+      <div css={`
+         align-items: flex-start;
+         justify-content: center;
+         background: #00000090;
+         top: 0;
+         left: 0;
+         display: ${showRegister ? 'flex' : 'none'};
+         position: absolute;
+         z-index: 200;
+         height: 100vh;
+         width: 100%;
+         padding-top: 25vh;
+      `}>
+         <RegisterWidget />
+      </div>
+
       <div className="user_nav_icon" 
          ref={wrapperRef}
          onClick={() => setToggle(true)}
@@ -41,12 +59,19 @@ const GuestNavIcon = (props) => {
       >
          <span css={`padding-bottom: 0`}>{props.name ? props.name : "User"}</span>
          {toggle &&
-            <div css={`flex: 1; padding: 1rem 0`}>
+            <div css={`
+               flex: 1; 
+               padding: 1rem 0;
+
+               & > button {
+                  margin: 5px;
+               }
+            `}>
                <ThemeToggle />
                <Button onClick={() => setShowLogIn(true)}>
                   Sign in
                </Button>
-               <Button>
+               <Button onClick={() => setShowRegister(true)}>
                   Create account
                </Button>
             </div>
@@ -76,9 +101,45 @@ const LogInWidget = (props) => {
             margin: auto;
             max-width: 90%;
             min-width: 240px;
-            width: 80%;
+            width: 300px;
          `}>
          
+            <StyledTextInput type='email' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <StyledTextInput type='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} /> 
+            
+            <Button type='submit'>Log in</Button>
+         </div>
+      </form>
+   )
+}
+
+const RegisterWidget = (props) => {
+   const [email, setEmail] = useState('')
+   const [password, setPassword] = useState('')
+   const [name, setName] = useState('')
+   const [initials, setInitials] = useState('')
+   const authapi = useAuth()
+
+   const handleRegister = (e) => {
+      e.preventDefault()
+      authapi.register(email, password, initials, name)
+   }
+
+   return (
+      <form onSubmit={(e) => handleRegister(e)}>
+         <div css={`
+            display: flex;
+            flex-direction: column;
+            background: #57657b;
+            padding: 1rem;
+            margin: auto;
+            max-width: 90%;
+            min-width: 240px;
+            width: 300px;
+         `}>
+         
+            <StyledTextInput type='text' placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+            <StyledTextInput type='text' placeholder="Initials" value={initials} onChange={(e) => setInitials(e.target.value)} />
             <StyledTextInput type='email' placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <StyledTextInput type='password' placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} /> 
             
