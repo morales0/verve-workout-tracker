@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/verve-workout-tracker/static/css/main.5845e585.chunk.css",
-    "main.js": "/verve-workout-tracker/static/js/main.3c2796ab.chunk.js",
-    "main.js.map": "/verve-workout-tracker/static/js/main.3c2796ab.chunk.js.map",
+    "main.js": "/verve-workout-tracker/static/js/main.9a781a19.chunk.js",
+    "main.js.map": "/verve-workout-tracker/static/js/main.9a781a19.chunk.js.map",
     "runtime-main.js": "/verve-workout-tracker/static/js/runtime-main.5ea42d85.js",
     "runtime-main.js.map": "/verve-workout-tracker/static/js/runtime-main.5ea42d85.js.map",
     "static/css/2.360b6f5a.chunk.css": "/verve-workout-tracker/static/css/2.360b6f5a.chunk.css",
     "static/js/2.4cde7dd4.chunk.js": "/verve-workout-tracker/static/js/2.4cde7dd4.chunk.js",
     "static/js/2.4cde7dd4.chunk.js.map": "/verve-workout-tracker/static/js/2.4cde7dd4.chunk.js.map",
     "index.html": "/verve-workout-tracker/index.html",
-    "precache-manifest.573099c5570bd114a5118660630f456a.js": "/verve-workout-tracker/precache-manifest.573099c5570bd114a5118660630f456a.js",
+    "precache-manifest.18f3a6102fe4137fc05c918d56651d64.js": "/verve-workout-tracker/precache-manifest.18f3a6102fe4137fc05c918d56651d64.js",
     "service-worker.js": "/verve-workout-tracker/service-worker.js",
     "static/css/2.360b6f5a.chunk.css.map": "/verve-workout-tracker/static/css/2.360b6f5a.chunk.css.map",
     "static/css/main.5845e585.chunk.css.map": "/verve-workout-tracker/static/css/main.5845e585.chunk.css.map",
@@ -25,6 +25,6 @@
     "static/css/2.360b6f5a.chunk.css",
     "static/js/2.4cde7dd4.chunk.js",
     "static/css/main.5845e585.chunk.css",
-    "static/js/main.3c2796ab.chunk.js"
+    "static/js/main.9a781a19.chunk.js"
   ]
 }

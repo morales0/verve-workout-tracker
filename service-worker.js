@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/verve-workout-tracker/precache-manifest.573099c5570bd114a5118660630f456a.js"
+  "/verve-workout-tracker/precache-manifest.18f3a6102fe4137fc05c918d56651d64.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0a21eb199afb696085a2464eacedada5",
+    "revision": "3b44d724a0f932a2ccce9e182c587e46",
     "url": "/verve-workout-tracker/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/verve-workout-tracker/static/css/2.360b6f5a.chunk.css"
   },
   {
-    "revision": "aef0d4108140d4fa5428",
+    "revision": "78c382372123d502d263",
     "url": "/verve-workout-tracker/static/css/main.5845e585.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/verve-workout-tracker/static/js/2.4cde7dd4.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "aef0d4108140d4fa5428",
-    "url": "/verve-workout-tracker/static/js/main.3c2796ab.chunk.js"
+    "revision": "78c382372123d502d263",
+    "url": "/verve-workout-tracker/static/js/main.9a781a19.chunk.js"
   },
   {
     "revision": "a510177317f3385e0da3",
