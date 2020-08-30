@@ -16,7 +16,7 @@ const UnauthenticatedApp = () => {
   const {user, authenticated, api} = useUser()
 
    return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         {/* Route a header depending on path here */}
         <header>
           <Switch>
@@ -45,7 +45,7 @@ const UnauthenticatedApp = () => {
             </Route>
 
             <Route path="*">
-              <h1>Not found header</h1>
+              <h1>Not found!</h1>
             </Route>
           </Switch>
         </header>

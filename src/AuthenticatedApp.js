@@ -12,7 +12,7 @@ const AuthenticatedApp = () => {
 	const { user, authenticated, subscribe, set } = useUser();
 
 	return (
-		<Router>
+		<Router basename={process.env.PUBLIC_URL}>
 			{/* Route a header depending on path here */}
 			<header>
 				<Switch>
