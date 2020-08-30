@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
 
 import { useUser } from './context/user-context';
