@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { UserNavbar, Main } from './components';
 
 // Pages
@@ -12,7 +12,7 @@ const AuthenticatedApp = () => {
 	const { user, authenticated, subscribe, set } = useUser();
 
 	return (
-		<Router basename={process.env.PUBLIC_URL}>
+		<Router>
 			{/* Route a header depending on path here */}
 			<header>
 				<Switch>

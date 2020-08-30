@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
+import {HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid';
 
 import { useUser } from './context/user-context';
@@ -16,7 +16,7 @@ const UnauthenticatedApp = () => {
   const {user, authenticated, api} = useUser()
 
    return (
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         {/* Route a header depending on path here */}
         <header>
           <Switch>
