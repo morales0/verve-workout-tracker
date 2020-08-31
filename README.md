@@ -17,7 +17,10 @@ Verve is a webapp for logging your workouts and observing your own trends. Authe
 * [Download](#download)
 
 ## Demo
-THIS APP IS NOT LIVE YET AND STILL IN DEVELOPMENT.
+https://workout-app-37a10.web.app/
+Hosted using firebase. (Will try to host using Github Pages)
+
+This demo is still in development! Will be fixing bugs, adding features, and updating current ones regularly.
 
 ## App Story
 In high school, I took a weights class and we had to record all of our workouts on a giant piece of paper. In college, I started recording them in a spreadsheet. Well, today, I refuse to go back. 
